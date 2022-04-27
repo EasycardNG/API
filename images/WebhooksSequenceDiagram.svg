@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="237px" preserveAspectRatio="none" style="width:470px;height:237px;background:#003153;" version="1.1" viewBox="0 0 470 237" width="470px" zoomAndPan="magnify"><defs/><g><line style="stroke:#D9D3D0;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="60" x2="60" y1="36.2969" y2="201.9609"/><line style="stroke:#D9D3D0;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="206" x2="206" y1="36.2969" y2="201.9609"/><line style="stroke:#D9D3D0;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="411" x2="411" y1="36.2969" y2="201.9609"/><rect fill="#003153" height="30.2969" rx="2.5" ry="2.5" style="stroke:#D9D3D0;stroke-width:1.0;" width="80" x="20" y="5"/><text fill="#D9D3D0" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="66" x="27" y="24.9951">Web Site</text><rect fill="#003153" height="30.2969" rx="2.5" ry="2.5" style="stroke:#D9D3D0;stroke-width:1.0;" width="80" x="20" y="200.9609"/><text fill="#D9D3D0" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="66" x="27" y="220.9561">Web Site</text><rect fill="#003153" height="30.2969" rx="2.5" ry="2.5" style="stroke:#D9D3D0;stroke-width:1.0;" width="152" x="130" y="5"/><text fill="#D9D3D0" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="138" x="137" y="24.9951">EasyCard Checkout</text><rect fill="#003153" height="30.2969" rx="2.5" ry="2.5" style="stroke:#D9D3D0;stroke-width:1.0;" width="152" x="130" y="200.9609"/><text fill="#D9D3D0" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="138" x="137" y="220.9561">EasyCard Checkout</text><rect fill="#003153" height="30.2969" rx="2.5" ry="2.5" style="stroke:#D9D3D0;stroke-width:1.0;" width="106" x="358" y="5"/><text fill="#D9D3D0" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="92" x="365" y="24.9951">EasyCard API</text><rect fill="#003153" height="30.2969" rx="2.5" ry="2.5" style="stroke:#D9D3D0;stroke-width:1.0;" width="106" x="358" y="200.9609"/><text fill="#D9D3D0" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="92" x="365" y="220.9561">EasyCard API</text><polygon fill="#D9D3D0" points="194,63.4297,204,67.4297,194,71.4297,198,67.4297" style="stroke:#D9D3D0;stroke-width:1.0;"/><line style="stroke:#D9D3D0;stroke-width:1.0;" x1="60" x2="200" y1="67.4297" y2="67.4297"/><text fill="#D9D3D0" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="49" x="67" y="62.3638">redirect</text><polygon fill="#D9D3D0" points="399,92.5625,409,96.5625,399,100.5625,403,96.5625" style="stroke:#D9D3D0;stroke-width:1.0;"/><line style="stroke:#D9D3D0;stroke-width:1.0;" x1="206" x2="405" y1="96.5625" y2="96.5625"/><text fill="#D9D3D0" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="179" x="213" y="91.4966">create payment transaction</text><polygon fill="#D9D3D0" points="71,121.6953,61,125.6953,71,129.6953,67,125.6953" style="stroke:#D9D3D0;stroke-width:1.0;"/><line style="stroke:#D9D3D0;stroke-width:1.0;" x1="65" x2="410" y1="125.6953" y2="125.6953"/><text fill="#D9D3D0" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="327" x="77" y="120.6294">POST TransactionID to configired webhook address</text><polygon fill="#D9D3D0" points="399,150.8281,409,154.8281,399,158.8281,403,154.8281" style="stroke:#D9D3D0;stroke-width:1.0;"/><line style="stroke:#D9D3D0;stroke-width:1.0;" x1="60" x2="405" y1="154.8281" y2="154.8281"/><text fill="#D9D3D0" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="273" x="67" y="149.7622">get transaction details using TransactionID</text><polygon fill="#D9D3D0" points="71,179.9609,61,183.9609,71,187.9609,67,183.9609" style="stroke:#D9D3D0;stroke-width:1.0;"/><line style="stroke:#D9D3D0;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="65" x2="410" y1="183.9609" y2="183.9609"/><text fill="#D9D3D0" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="121" x="77" y="178.895">Transaction details</text><!--MD5=[760ddb51f77dff72676edccd50181e67]
+@startuml
+!theme blueprint
+participant "Web Site" as website
+participant "EasyCard Checkout" as checkout
+participant "EasyCard API" as api
+
+website->checkout : redirect
+checkout->api: create payment transaction
+api->website: POST TransactionID to configired webhook address
+website->api:get transaction details using TransactionID
+api- ->website: Transaction details
+@enduml
+
+@startuml
+
+
+
+
+
+<style>
+  root {
+    BackgroundColor #003153
+    FontColor #D9D3D0
+    FontName Verdana
+    HyperLinkColor #D9D3D0
+    LineColor #D9D3D0
+    LineThickness 1
+    Margin 5
+  }
+  caption {
+    LineThickness 0
+  }
+  footer {
+    LineThickness 0
+  }
+  header {
+    LineThickness 0
+  }
+  node {
+    MaximumWidth 300
+  }
+  title {
+    FontSize 22
+    LineThickness 0
+  }
+</style>
+
+skinparam ArrowLollipopColor #D9D3D0
+skinparam BackgroundColor #003153
+skinparam DefaultFontName Verdana
+skinparam DefaultMonospacedFontName Courier
+skinparam LifelineStrategy nosolid
+skinparam ParticipantPadding 10
+skinparam SequenceLifeLineBorderColor #D9D3D0
+skinparam Shadowing false
+skinparam UseBetaStyle true
+
+skinparam Activity {
+  BackgroundColor #003153
+  BarColor #D9D3D0
+  BorderColor #D9D3D0
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam Boundary {
+  FontColor #D9D3D0
+}
+skinparam Box {
+  Padding 5
+}
+skinparam CircledCharacter {
+  FontColor #D9D3D0
+  FontName Courier
+  Radius 9
+}
+skinparam Class {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam ClassAttribute {
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam ClassStereotype {
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam Footer {
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam Header {
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam Hyperlink {
+  Color #D9D3D0
+}
+skinparam IconPackage {
+  Color #D9D3D0
+  BackgroundColor #003153
+}
+skinparam IconPrivate {
+  Color #D9D3D0
+  BackgroundColor #003153
+}
+skinparam IconProtected {
+  Color #D9D3D0
+  BackgroundColor #003153
+}
+skinparam IconPublic {
+  Color #D9D3D0
+  BackgroundColor #003153
+}
+skinparam Note {
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam Object {
+  BorderColor #D9D3D0
+}
+skinparam Package {
+  BorderColor #D9D3D0
+  FontColor #D9D3D0
+  FontName Verdana
+}
+skinparam State {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+}
+skinparam StereotypeA {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+}
+skinparam StereotypeC {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+}
+skinparam StereotypeE {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+}
+skinparam StereotypeI {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+}
+skinparam StereotypeN {
+  BackgroundColor #003153
+  BorderColor #D9D3D0
+}
+skinparam UseCaseStereoType {
+  FontColor #D9D3D0
+  FontName Verdana
+}
+participant "Web Site" as website
+participant "EasyCard Checkout" as checkout
+participant "EasyCard API" as api
+
+website->checkout : redirect
+checkout->api: create payment transaction
+api->website: POST TransactionID to configired webhook address
+website->api:get transaction details using TransactionID
+api- ->website: Transaction details
+@enduml
+
+PlantUML version 1.2022.3beta2(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

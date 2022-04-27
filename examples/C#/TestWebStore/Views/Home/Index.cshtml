@@ -1,0 +1,130 @@
+﻿@model BasketViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+
+
+    <div class="col-md-9">
+        <div class="panel panel-default">
+
+
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Error
+            </div>
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Test Basket</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <form method="post">
+                  
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label asp-for="ProductName">Product Name</label>
+                            <input class="form-control" asp-for="ProductName">
+                            <span asp-validation-for="ProductName"></span>
+                            <span class="control-validation"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price">Price</label>
+                            <input class="form-control" asp-for="Price">
+                            <span asp-validation-for="Price"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Quantity">Quantity</label>
+                            <input class="form-control" asp-for="Quantity">
+                            <span asp-validation-for="Quantity"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Name">Consumer Name</label>
+                            <input class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="NationalID">NationalID</label>
+                            <input class="form-control" asp-for="NationalID">
+                            <span asp-validation-for="NationalID"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input class="form-control" asp-for="Email">
+                            <span asp-validation-for="Email"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Phone">Phone</label>
+                            <input class="form-control" asp-for="Phone">
+                            <span asp-validation-for="Phone"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <hr />
+
+                        <div class="form-group">
+                            <label asp-for="InternalOrderID">InternalOrderID</label>
+                            <input class="form-control" asp-for="InternalOrderID">
+                            <span asp-validation-for="InternalOrderID"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ConsumerID">ConsumerID</label>
+                            <input class="form-control" asp-for="ConsumerID">
+                            <span asp-validation-for="ConsumerID"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IssueInvoice">IssueInvoice</label>
+                            <input type="checkbox" class="form-check-inline" asp-for="IssueInvoice">
+                            <span asp-validation-for="IssueInvoice"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AllowPinPad">AllowPinPad</label>
+                            <input type="checkbox" class="form-check-inline" asp-for="AllowPinPad">
+                            <span asp-validation-for="AllowPinPad"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UserAmount">UserAmount</label>
+                            <input type="checkbox" class="form-check-inline" asp-for="UserAmount">
+                            <span asp-validation-for="UserAmount"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Refund">Refund</label>
+                            <input type="checkbox" class="form-check-inline" asp-for="Refund">
+                            <span asp-validation-for="Refund"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Pay with EasyCard" asp-action="PayWithEasyCard" />
+
+                            <input type="submit" class="btn btn-outline-primary" name="submit" value="Pay with EasyCard (legacy flow)" asp-action="PayWithEasyCardLegacyFlow" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

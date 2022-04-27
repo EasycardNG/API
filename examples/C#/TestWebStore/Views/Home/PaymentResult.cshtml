@@ -1,0 +1,62 @@
+﻿@model PaymentResultViewModel
+@{
+    ViewData["Title"] = "PaymentResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Payment successful</h1>
+
+    
+<hr />
+
+<h3>Internal order: @Model.InternalOrderID</h3>
+<h3>EasyCard transaction ID: @Model.TransactionID</h3>
+
+<hr />
+
+<pre>
+@Model.Payload
+</pre>
+
+<hr />
+
+<h2>Legacy flow query string parameters (will be empty of modern flow used):</h2>
+
+<hr />
+
+<h4>StateData: @Model.StateData</h4>
+<h4>CardOwner: @Model.CardOwner</h4>
+<h4>OwnerEmail: @Model.OwnerEmail</h4>
+<h4>Id: @Model.Id</h4>
+<h4>OkNumber: @Model.OkNumber</h4>
+<h4>Code: @Model.Code</h4>
+<h4>DealID: @Model.DealID</h4>
+<h4>BusinessName: @Model.BusinessName</h4>
+<h4>Terminal: @Model.Terminal</h4>
+<h4>DealNumber: @Model.DealNumber</h4>
+<h4>CardNumber: @Model.CardNumber</h4>
+<h4>DealDate: @Model.DealDate</h4>
+<h4>PayNumber: @Model.PayNumber</h4>
+<h4>FirstPay: @Model.FirstPay</h4>
+<h4>AddPay: @Model.AddPay</h4>
+<h4>DealTypeOut: @Model.DealTypeOut</h4>
+<h4>DealType: @Model.DealType</h4>
+<h4>Currency: @Model.Currency</h4>
+<h4>CardNameID: @Model.CardNameID</h4>
+<h4>Manpik: @Model.Manpik</h4>
+<h4>Mutag: @Model.Mutag</h4>
+<h4>DealTypeID: @Model.DealTypeID</h4>
+<h4>CurrencyID: @Model.CurrencyID</h4>
+<h4>CardNameIDCode: @Model.CardNameIDCode</h4>
+<h4>ManpikID: @Model.ManpikID</h4>
+<h4>MutagID: @Model.MutagID</h4>
+<h4>Tz: @Model.Tz</h4>
+<h4>CardDate: @Model.CardDate</h4>
+<h4>Token: @Model.Token</h4>
+<h4>PhoneNumber: @Model.PhoneNumber</h4>
+<h4>EmvSoftVersion: @Model.EmvSoftVersion</h4>
+<h4>OriginalUID: @Model.OriginalUID</h4>
+<h4>CompRetailerNum: @Model.CompRetailerNum</h4>
+<h4>Total: @Model.Total</h4>
+
+

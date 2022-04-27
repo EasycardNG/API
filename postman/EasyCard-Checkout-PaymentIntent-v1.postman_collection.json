@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "86c2b8ef-6282-4cb4-aba0-8b3274a23b83",
+		"name": "EasyCard-Checkout-PaymentIntent-v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Terminal Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Ensure access_token present\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData.access_token).not.eql(undefined);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"TerminalAccessToken\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "terminal",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "terminal_rest_api",
+							"type": "text"
+						},
+						{
+							"key": "authorizationKey",
+							"value": "{{TerminalApiKey}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "transactions_api",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{IdentityServerAddress}}/connect/token",
+					"host": [
+						"{{IdentityServerAddress}}"
+					],
+					"path": [
+						"connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Payment Link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TerminalAccessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dealDetails\": {\r\n    \"dealReference\": \"123456\",\r\n    \"dealDescription\": \"some product pack: 3kg.\",\r\n    \"consumerEmail\": \"email@example.com\",\r\n    \"consumerPhone\": \"555-765\",\r\n    \"consumerID\": \"{{ConsumerID}}\"\r\n  },\r\n  \"currency\": \"USD\",\r\n  \"paymentRequestAmount\": 1200,\r\n  \"dueDate\": \"2021-12-31T00:00:00\",\r\n  \"installmentDetails\": {\r\n    \"numberOfPayments\": 6,\r\n    \"initialPaymentAmount\": 200,\r\n    \"totalAmount\": 1200,\r\n    \"installmentPaymentAmount\": 200\r\n  },\r\n  \"isRefund\": false,\r\n  \"redirectUrl\": \"https://ecng-testwebstore.azurewebsites.net/PaymentResult?MyOrderID=123456&MySecurityCode=45678912345\",\r\n  \"userAmount\": true,\r\n  \"extension\": {\r\n    \"customPropertyInMySystem\": \"MyCustomValue\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{TransactionsApiAddress}}/api/paymentIntent",
+					"host": [
+						"{{TransactionsApiAddress}}"
+					],
+					"path": [
+						"api",
+						"paymentIntent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transaction by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TerminalAccessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{TransactionsApiAddress}}/api/transactions/{{TransactionID}}",
+					"host": [
+						"{{TransactionsApiAddress}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"{{TransactionID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TerminalAccessToken",
+			"value": ""
+		},
+		{
+			"key": "TerminalApiKey",
+			"value": ""
+		},
+		{
+			"key": "ConsumerID",
+			"value": ""
+		},
+		{
+			"key": "TransactionID",
+			"value": ""
+		}
+	]
+}

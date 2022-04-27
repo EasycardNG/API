@@ -1,0 +1,18 @@
+@startuml
+!theme blueprint
+participant "Consumer" as consumer
+participant "Web Site" as website
+participant "EasyCard Checkout" as checkout
+participant "EasyCard API" as api
+
+consumer->website: start payment
+website->api: "create <b>Payment Intent</b>"
+api-->website: "<b>Payment Intent</b> url"
+website->checkout : "open using <b>Payment Intent</b> url"
+consumer->checkout : fill credit card details
+checkout->website: redirect to confirmation page\nonly TransactionID will be added to query string
+website->api:get transaction details using TransactionID
+api-->website: Transaction details
+website->website: store transaction details
+website->consumer: payment completed 
+@enduml

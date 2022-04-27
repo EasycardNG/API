@@ -1,0 +1,12 @@
+@startuml
+!theme blueprint
+participant "Web Site" as website
+participant "EasyCard Checkout" as checkout
+participant "EasyCard API" as api
+
+website->checkout : redirect
+checkout->api: create payment transaction
+api->website: POST TransactionID to configired webhook address
+website->api:get transaction details using TransactionID
+api-->website: Transaction details
+@enduml

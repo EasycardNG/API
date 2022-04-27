@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebHookData>
+
+<h1>List of stored webhooks data</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EventID</th>
+                <th>ErrorMesage</th>
+                <th>EventName</th>
+                <th>EventTimestamp</th>
+                <th>EntityType</th>
+                <th>EntityExternalReference</th>
+                <th>EntityReference</th>
+                <th>IsFailureEvent</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.EventID</td>
+                <td>@item.ErrorMesage</td>
+                <td>@item.EventName</td>
+                <td>@item.EventTimestamp</td>
+                <td>@item.EntityType</td>
+                <td>@item.EntityExternalReference</td>
+                <td>@item.EntityReference</td>
+                <td>@item.IsFailureEvent</td>
+            </tr>
+                
+            }
+
+        </tbody>
+    </table>
