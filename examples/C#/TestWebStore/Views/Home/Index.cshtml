@@ -89,6 +89,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label asp-for="ConsumerExternalReference">ConsumerExternalReference</label>
+                            <input class="form-control" asp-for="ConsumerExternalReference">
+                            <span asp-validation-for="ConsumerExternalReference"></span>
+                            <span class="control-validation"></span>
+                        </div>
+
+                        <div class="form-group">
                             <label asp-for="IssueInvoice">IssueInvoice</label>
                             <input type="checkbox" class="form-check-inline" asp-for="IssueInvoice">
                             <span asp-validation-for="IssueInvoice"></span>
@@ -120,6 +127,8 @@
                             <input type="submit" class="btn btn-primary" name="submit" value="Pay with EasyCard" asp-action="PayWithEasyCard" />
 
                             <input type="submit" class="btn btn-outline-primary" name="submit" value="Pay with EasyCard (legacy flow)" asp-action="PayWithEasyCardLegacyFlow" />
+
+                            <input type="submit" class="btn btn-outline-success" name="submit" value="Create Billing Deal" asp-action="CreateBillingDeal" />
                         </div>
                     </fieldset>
                 </form>

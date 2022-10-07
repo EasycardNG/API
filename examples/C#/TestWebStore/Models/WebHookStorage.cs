@@ -16,9 +16,10 @@ namespace TestWebStore.Models
 
         public WebHookStorage(string storageConnectionString, string tableName)
         {
-            table = new TableClient(storageConnectionString, tableName);
+            // TODO: run azure sotrage emulator or specify azure connection string before uncomment this
+            //table = new TableClient(storageConnectionString, tableName);
 
-            table.CreateIfNotExists();
+            //table.CreateIfNotExists();
         }
 
         public async Task<IEnumerable<WebHookData>> GetData()

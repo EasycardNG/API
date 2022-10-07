@@ -23,6 +23,8 @@ Sections
 
 - [Ecwid payment method setup](ecng-ecwid/readme.md)
 
+- [Billing (Recurring Payments)](Billing.md)
+
 <br/><br/>
 
 Environments

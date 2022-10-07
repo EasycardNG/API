@@ -1,0 +1,23 @@
+﻿@model BillingDealViewModel
+@{
+    ViewData["Title"] = "Billing Deal created";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Billing Deal created successfuly</h1>
+
+    
+<hr />
+
+<h3>Internal order: @Model.InternalOrderID</h3>
+<h3>EasyCard Billing Deal ID: @Model.BillingDealID</h3>
+
+<hr />
+
+<pre>
+@Model.Payload
+</pre>
+
+<hr />
+
+

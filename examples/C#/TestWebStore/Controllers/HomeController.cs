@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,6 +15,7 @@ using Newtonsoft.Json;
 using Shared.Helpers;
 using Shared.Integration.Models;
 using TestWebStore.Models;
+using Transactions.Api.Models.Billing;
 using Transactions.Api.Models.PaymentRequests;
 
 namespace TestWebStore.Controllers
@@ -25,6 +27,9 @@ namespace TestWebStore.Controllers
         private readonly TransactionsApiClient transactionsApiClient;
         private readonly ApplicationSettings appSettings;
 
+        // this emulates the database in your system
+        private static readonly ConcurrentDictionary<string, BillingDealInternal> billingDealsInternal = new ConcurrentDictionary<string, BillingDealInternal>();
+
         public HomeController(ILogger<HomeController> logger, IOptions<ApplicationSettings> appSettings, WebHookStorage webHookStorage, TransactionsApiClient transactionsApiClient)
         {
             this.logger = logger;
@@ -35,7 +40,7 @@ namespace TestWebStore.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new BasketViewModel { InternalOrderID = Guid.NewGuid().ToString() });
         }
 
         [HttpGet]
@@ -65,7 +70,7 @@ namespace TestWebStore.Controllers
             {
                 // Create new customer in ECNG system or get existin
 
-                var exisingConsumers = await transactionsApiClient.GetConsumers(new ConsumersFilter 
+                var exisingConsumers = await transactionsApiClient.GetConsumers(new ConsumersFilter
                 {
                     ExternalReference = model.ConsumerExternalReference,
                     //WoocommerceID = model.WoocommerceID, // TODO: use appropriate filters
@@ -127,7 +132,7 @@ namespace TestWebStore.Controllers
                 ConsumerNationalID = model.NationalID,
                 ConsumerEmail = model.Email,
                 ConsumerID = model.ConsumerID,
-                DealDescription = $"Goods and services from Test Wen Store: {model.ProductName}",
+                DealDescription = $"Goods and services from Test Web Store: {model.ProductName}",
             };
 
             var sum = (model.Price * model.Quantity).GetValueOrDefault();
@@ -169,6 +174,167 @@ namespace TestWebStore.Controllers
             }
 
             return Redirect(paymentIntentRes.AdditionalData["url"].ToString());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBillingDeal(BasketViewModel model)
+        {
+            if (model.ConsumerID == null && string.IsNullOrWhiteSpace(model.ConsumerExternalReference))
+            {
+                ModelState.AddModelError(nameof(model.ConsumerExternalReference), "Please specify ConsumerExternalReference or ConsumerID");
+                return View();
+            }
+
+            // Create new customer in ECNG system or get existing
+
+            if (model.ConsumerID == null)
+            {
+                var exisingConsumers = await transactionsApiClient.GetConsumers(new ConsumersFilter
+                {
+                    ExternalReference = model.ConsumerExternalReference,
+                });
+
+                if (exisingConsumers.NumberOfRecords == 1)
+                {
+                    model.ConsumerID = exisingConsumers.Data.First().ConsumerID;
+                }
+                else if (exisingConsumers.NumberOfRecords > 1)
+                {
+                    throw new ApplicationException("There are several consumers with same ExternalReference in ECNG");
+                }
+
+                if (model.ConsumerID == null)
+                {
+                    var consumerRequest = new ConsumerRequest
+                    {
+                        ConsumerEmail = model.Email,
+                        ConsumerName = model.Name,
+                        ConsumerNationalID = model.NationalID,
+                        ConsumerPhone = model.Phone,
+                        ExternalReference = model.ConsumerExternalReference,
+                    };
+
+                    var consumerResponse = await transactionsApiClient.CreateConsumer(consumerRequest);
+
+                    model.ConsumerID = consumerResponse.EntityUID;
+                }
+            }
+
+            var internalBilling = new BillingDealInternal
+            {
+                ConsumerID = model.ConsumerID,
+                Amount = (model.Price * model.Quantity).GetValueOrDefault(),
+                InternalOrderID = model.InternalOrderID,
+                ProductName = model.ProductName,
+                Name = model.Name,
+                Email = model.Email,
+                NationalID = model.NationalID
+            };
+
+            if (!billingDealsInternal.TryAdd(model.InternalOrderID, internalBilling))
+            {
+                ModelState.AddModelError(nameof(model.InternalOrderID), "The same InternalOrderID already exists");
+                return View();
+            }
+
+            var existingTokens = (await transactionsApiClient.GetTokens(new Transactions.Api.Models.Tokens.CreditCardTokenFilter { ConsumerID = model.ConsumerID })).Data?.Where(t => t.CardExpiration.Expired == false).ToList();
+
+            if (!existingTokens.Any())
+            {
+                return View("SavedCards", existingTokens);
+            }
+
+            return await GetUrlForCardSaving(internalBilling);
+        }
+
+        private async Task<IActionResult> GetUrlForCardSaving(BillingDealInternal model)
+        {
+            var webStoreUrl = appSettings.RedirectUrlBase;
+
+            PaymentRequestCreate easyCardQuery = new PaymentRequestCreate();
+
+            easyCardQuery.Currency = CurrencyEnum.ILS;
+            easyCardQuery.RedirectUrl = UrlHelper.BuildUrl(webStoreUrl, "CreateTokenResult", new { model.InternalOrderID });
+
+            easyCardQuery.AllowPinPad = false;
+            easyCardQuery.IssueInvoice = false;
+
+            easyCardQuery.DealDetails = new DealDetails
+            {
+                ConsumerName = model.Name,
+                ConsumerNationalID = model.NationalID,
+                ConsumerEmail = model.Email,
+                ConsumerID = model.ConsumerID,
+                DealDescription = $"Please add you card to Test Web Store",
+            };
+
+
+            easyCardQuery.UserAmount = false;
+            easyCardQuery.PaymentRequestAmount = 0;
+            easyCardQuery.VATRate = 0.17m;
+            easyCardQuery.VATTotal = 0;
+            easyCardQuery.NetTotal = 0;
+
+
+            var paymentIntentRes = await transactionsApiClient.CreatePaymentIntent(easyCardQuery);
+
+            if (paymentIntentRes.Status != Shared.Api.Models.Enums.StatusEnum.Success)
+            {
+                ViewBag.Error = paymentIntentRes.Message;
+                return View("Index", model);
+            }
+
+            return Redirect(paymentIntentRes.AdditionalData["url"].ToString());
+        }
+
+        [HttpGet]
+        [Route("CreateTokenResult")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<IActionResult> CreateTokenResult(CreateTokenResultCallbackModel model)
+        {
+            BillingDealRequest easyCardQuery = new BillingDealRequest();
+
+            if (!billingDealsInternal.TryGetValue(model.InternalOrderID, out var billingDealInternal))
+            {
+                ViewBag.Error = $"Given InternalOrderID {model.InternalOrderID} does not exist";
+                return View("Index", model);
+            }
+
+            easyCardQuery.CreditCardToken = Guid.Parse(model.TokenID);
+            easyCardQuery.DealDetails = new DealDetails
+            {
+                ConsumerID = billingDealInternal.ConsumerID,
+                DealDescription = $"Goods and services from Test Web Store: {billingDealInternal.ProductName}",
+            };
+            easyCardQuery.TransactionAmount = billingDealInternal.Amount.GetValueOrDefault();
+            easyCardQuery.BillingSchedule = new Transactions.Shared.Models.BillingSchedule
+            {
+                StartAt = DateTime.Now,
+                StartAtType = Transactions.Shared.Enums.StartAtTypeEnum.SpecifiedDate,
+                EndAtType = Transactions.Shared.Enums.EndAtTypeEnum.AfterNumberOfPayments,
+                RepeatPeriodType = Transactions.Shared.Enums.RepeatPeriodTypeEnum.Monthly,
+                EndAtNumberOfPayments = 10
+            };
+
+            var billingDealRes = await transactionsApiClient.CreateBillingDeal(easyCardQuery);
+
+            if (billingDealRes.Status != Shared.Api.Models.Enums.StatusEnum.Success)
+            {
+                ViewBag.Error = billingDealRes.Message;
+                return View("Index", model);
+            }
+
+            var billingDealEntity = await transactionsApiClient.GetBillingDeal(billingDealRes.EntityUID.GetValueOrDefault());
+
+            var res = new BillingDealViewModel
+            {
+                BillingDealID = billingDealEntity.BillingDealID.ToString(),
+                InternalOrderID = model.InternalOrderID,
+            };
+
+            res.Payload = JsonConvert.SerializeObject(billingDealEntity, Formatting.Indented);
+
+            return View(res);
         }
 
         private string BuildRedirectUrlForLegacyFlow(BasketViewModel model)
