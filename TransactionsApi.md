@@ -2,19 +2,29 @@
 
 <h1 id="easycard-transactions-api">EasyCard Transactions API v1</h1>
 
+-----------------------------------------------------------------
+> Please refer to Full API description if you need most recent development version
+
+Development version: [https://ecng-transactions.azurewebsites.net/api-docs/index.html](https://ecng-transactions.azurewebsites.net/api-docs/index.html)
+
+Live version: [https://api.e-c.co.il/api-docs/index.html](https://api.e-c.co.il/api-docs/index.html)
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+> Scroll down for example requests and responses.
+
 - [Authentication](Readme.md#authentication)
+- [Environments](Readme.md#environments)
+- [Examples](Readme.md#examples)
 - [Billing](#billing)
   - [Get billing deals list using filter](#get-billing-deals-list-using-filter)
-      - [Detailed descriptions](#detailed-descriptions)
-      - [Enumerated Values](#enumerated-values)
   - [Create billing deal](#create-billing-deal)
   - [Get billing deal details](#get-billing-deal-details)
   - [Update billing deal](#update-billing-deal)
   - [Update credit card token for billing deal](#update-credit-card-token-for-billing-deal)
 - [CardToken](#cardtoken)
   - [Get tokens by filters](#get-tokens-by-filters)
-      - [Detailed descriptions](#detailed-descriptions-1)
-      - [Enumerated Values](#enumerated-values-1)
   - [Delete credit card token](#delete-credit-card-token)
 - [PaymentIntent](#paymentintent)
   - [Get payment intent details](#get-payment-intent-details)
@@ -22,16 +32,12 @@
   - [Create payment link to Checkout Page](#create-payment-link-to-checkout-page)
 - [PaymentRequests](#paymentrequests)
   - [Get payment requests by filters](#get-payment-requests-by-filters)
-      - [Detailed descriptions](#detailed-descriptions-2)
-      - [Enumerated Values](#enumerated-values-2)
   - [Create payment request](#create-payment-request)
   - [Get payment request details by ID](#get-payment-request-details-by-id)
   - [Cancel payment request](#cancel-payment-request)
 - [TransactionsApi](#transactionsapi)
   - [Get payment transaction details](#get-payment-transaction-details)
   - [Get payment transactions list using filter](#get-payment-transactions-list-using-filter)
-      - [Detailed descriptions](#detailed-descriptions-3)
-      - [Enumerated Values](#enumerated-values-3)
   - [Create the charge based on credit card or previously stored credit card token (J4 deal)](#create-the-charge-based-on-credit-card-or-previously-stored-credit-card-token-j4-deal)
   - [Blocking funds on credit card (J5 deal)](#blocking-funds-on-credit-card-j5-deal)
   - [Implement J5 deal](#implement-j5-deal)
@@ -40,15 +46,7 @@
   - [Refund or chargeback of and existing transaction](#refund-or-chargeback-of-and-existing-transaction)
 - [Webhooks](#webhooks)
   - [Get executed webhooks history](#get-executed-webhooks-history)
-      - [Detailed descriptions](#detailed-descriptions-4)
-      - [Enumerated Values](#enumerated-values-4)
 - [Schemas](#schemas)
-
-> Scroll down for example requests and responses.
-
-# Authentication
-
-- HTTP Authentication, scheme: bearer 
 
 # Billing
 
@@ -60,15 +58,12 @@
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|QuickStatus|query|[BillingsQuickStatusFilterEnum](#schemabillingsquickstatusfilterenum)|false|
-|
+|QuickStatus|query|[BillingsQuickStatusFilterEnum](#schemabillingsquickstatusfilterenum)|false|none|
 |TerminalID|query|string(uuid)|false|none|
 |MerchantID|query|string(uuid)|false|none|
 |BillingDealID|query|string(uuid)|false|none|
-|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|
-|
-|QuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|
-|
+|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|none|
+|QuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|none|
 |FilterDateByNextScheduledTransaction|query|boolean|false|none|
 |DateFrom|query|string(date)|false|none|
 |DateTo|query|string(date)|false|none|
@@ -83,8 +78,7 @@
 |Finished|query|boolean|false|none|
 |Paused|query|boolean|false|none|
 |HasError|query|boolean|false|none|
-|PaymentType|query|[PaymentTypeEnum](#schemapaymenttypeenum)|false|
-|
+|PaymentType|query|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|
 |DealReference|query|string|false|Merchant deal reference|
 |InvoiceOnly|query|boolean|false|none|
 |Origin|query|string|false|none|
@@ -92,126 +86,12 @@
 |InProgress|query|boolean|false|none|
 |CreditCardExpired|query|boolean|false|none|
 |ConsumerExternalReference|query|string|false|none|
-|BillingDealType|query|[BillingDealTypeEnum](#schemabillingdealtypeenum)|false|
-|
+|BillingDealType|query|[BillingDealTypeEnum](#schemabillingdealtypeenum)|false|none|
 |Take|query|integer(int32)|false|none|
 |Skip|query|integer(int32)|false|none|
 |SortBy|query|string|false|none|
 |SortDesc|query|boolean|false|none|
-|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|
-|
-
-#### Detailed descriptions
-
-**QuickStatus**: 
-
-All
-
-Completed
-
-Inactive
-
-Failed
-
-CardExpired
-
-TriggeredTomorrow
-
-Paused
-
-ExpiredNextMonth
-
-ManualTrigger
-
-InProgress
-
-**Currency**: 
-
-ILS
-
-USD
-
-EUR
-
-**QuickDateFilter**: 
-
-today
-
-yesterday
-
-thisWeek
-
-lastWeek
-
-last30Days
-
-thisMonth
-
-lastMonth
-
-last3Months
-
-**PaymentType**: 
-
-card
-
-cheque
-
-cash
-
-bank
-
-**BillingDealType**: 
-
-CreditCard
-
-InvoiceOnly
-
-Bank
-
-**ShowDeleted**: 
-
-OnlyActive
-
-OnlyDeleted
-
-All
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|QuickStatus|All|
-|QuickStatus|Completed|
-|QuickStatus|Inactive|
-|QuickStatus|Failed|
-|QuickStatus|CardExpired|
-|QuickStatus|TriggeredTomorrow|
-|QuickStatus|Paused|
-|QuickStatus|ExpiredNextMonth|
-|QuickStatus|ManualTrigger|
-|QuickStatus|InProgress|
-|Currency|ILS|
-|Currency|USD|
-|Currency|EUR|
-|QuickDateFilter|today|
-|QuickDateFilter|yesterday|
-|QuickDateFilter|thisWeek|
-|QuickDateFilter|lastWeek|
-|QuickDateFilter|last30Days|
-|QuickDateFilter|thisMonth|
-|QuickDateFilter|lastMonth|
-|QuickDateFilter|last3Months|
-|PaymentType|card|
-|PaymentType|cheque|
-|PaymentType|cash|
-|PaymentType|bank|
-|BillingDealType|CreditCard|
-|BillingDealType|InvoiceOnly|
-|BillingDealType|Bank|
-|ShowDeleted|OnlyActive|
-|ShowDeleted|OnlyDeleted|
-|ShowDeleted|All|
+|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
 
 > Example responses
 
@@ -219,6 +99,9 @@ All
 
 ```json
 {
+  "totalAmountILS": 0,
+  "totalAmountUSD": 0,
+  "totalAmountEUR": 0,
   "numberOfRecords": 0,
   "data": [
     {
@@ -271,14 +154,7 @@ All
             "netAmount": 0,
             "discount": 0,
             "netDiscount": 0,
-            "extension": {
-              "property1": [
-                []
-              ],
-              "property2": [
-                []
-              ]
-            },
+            "extension": null,
             "woocommerceID": "string",
             "ecwidID": "string"
           }
@@ -303,10 +179,7 @@ All
       "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
       "consumerExternalReference": "string"
     }
-  ],
-  "totalAmountILS": 0,
-  "totalAmountUSD": 0,
-  "totalAmountEUR": 0
+  ]
 }
 ```
 
@@ -314,7 +187,7 @@ All
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesAmountResponse`1_BillingDealSummary](#schemasummariesamountresponse`1_billingdealsummary)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesAmountResponse_BillingDealSummary](#schemasummariesamountresponse_billingdealsummary)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -331,57 +204,6 @@ None ( Scopes: terminal_or_manager_or_admin )
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
@@ -409,13 +231,57 @@ None ( Scopes: terminal_or_manager_or_admin )
   },
   "paymentType": "card",
   "bankDetails": {
-    "paymentType": "card",
-    "amount": 0,
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
   },
-  "origin": "string"
+  "origin": "string",
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
+  }
 }
 ```
 
@@ -433,7 +299,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 {
   "message": "Billing Deal Created",
   "status": "success",
-  "entityUID": "2f14eaf0-dad8-4c5c-bbf0-5ddbef285126"
+  "entityUID": "253d8de2-b5ed-4f9a-9a23-63b0aa1c30c6"
 }
 ```
 
@@ -443,7 +309,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "b8a8e255-475f-4ecf-a0f3-1c27d6f46f30",
+  "correlationId": "0607b859-87d0-4fc8-bf4d-cc364c2f5d15",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -459,7 +325,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 {
   "message": "Entity Not Found",
   "status": "error",
-  "correlationId": "62d096c8-bfab-4ea5-8980-a50a5d74cbb8",
+  "correlationId": "29639763-b16a-4547-bff0-05e6b2f199b2",
   "entityType": "Consumer"
 }
 ```
@@ -468,7 +334,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
@@ -511,18 +377,18 @@ None ( Scopes: terminal_or_manager_or_admin )
   "nextScheduledTransaction": null,
   "creditCardDetails": null,
   "bankDetails": null,
-  "creditCardToken": "b2313efc-7238-4eb8-878d-ff5ae35540d3",
+  "creditCardToken": "14fbfce9-fb88-4c03-8ecf-d9366c9984f6",
   "dealDetails": {
     "dealReference": "123456",
     "dealDescription": "some product pack: 3kg.",
     "consumerEmail": "email@example.com",
     "consumerPhone": "555-765",
-    "consumerID": "566c33fe-a4bd-4332-9d73-1b2a4b453e82"
+    "consumerID": "e68bdf0c-a6b3-40fa-a63c-42c0d6eddc0f"
   },
   "billingSchedule": {
     "repeatPeriodType": "monthly",
     "startAtType": "specifiedDate",
-    "startAt": "2022-10-07T13:32:46.9982522+03:00",
+    "startAt": "2022-10-07T18:08:18.6121795+03:00",
     "endAtType": "afterNumberOfPayments",
     "endAt": null,
     "endAtNumberOfPayments": 10
@@ -577,57 +443,6 @@ None ( Scopes: terminal_or_manager_or_admin )
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
@@ -655,11 +470,55 @@ None ( Scopes: terminal_or_manager_or_admin )
   },
   "paymentType": "card",
   "bankDetails": {
-    "paymentType": "card",
-    "amount": 0,
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
   }
 }
 ```
@@ -679,7 +538,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "3f8181c9-0148-4b2a-aa6c-aa7c46ad9072",
+  "correlationId": "b4e0bd21-4e21-498c-ae95-9932ed12aec4",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -721,7 +580,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "99cecf7f-b9cd-4688-8f25-2a2703990f9f",
+  "correlationId": "bd23b59b-3bb2-40dd-afbe-b157a300db64",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -766,26 +625,7 @@ None ( Scopes: terminal_or_manager_or_admin )
 |Skip|query|integer(int32)|false|none|
 |SortBy|query|string|false|none|
 |SortDesc|query|boolean|false|none|
-|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|
-|
-
-#### Detailed descriptions
-
-**ShowDeleted**: 
-
-OnlyActive
-
-OnlyDeleted
-
-All
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|ShowDeleted|OnlyActive|
-|ShowDeleted|OnlyDeleted|
-|ShowDeleted|All|
+|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
 
 > Example responses
 
@@ -820,7 +660,7 @@ All
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesResponse`1_CreditCardTokenSummary](#schemasummariesresponse`1_creditcardtokensummary)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesResponse_CreditCardTokenSummary](#schemasummariesresponse_creditcardtokensummary)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -847,7 +687,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "231d4392-50f6-422e-a3ae-68d11834a40e",
+  "correlationId": "1898bf3a-70b3-4a9b-b7b2-432af48a53de",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -888,6 +728,28 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
+  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+  "terminalName": "string",
+  "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+  "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
+  "paymentRequestUrl": "string",
+  "history": [
+    {
+      "paymentRequestHistoryID": "a27f677d-9bac-4614-b73b-38acec040a90",
+      "operationDate": "2019-08-24T14:15:22Z",
+      "operationDoneBy": "string",
+      "operationCode": "PaymentRequestCreated",
+      "operationMessage": "string"
+    }
+  ],
+  "userPaidDetails": {
+    "vatRate": 0,
+    "vatTotal": 0,
+    "netTotal": 0,
+    "transactionAmount": 0
+  },
+  "amount": 0,
+  "origin": "string",
   "paymentRequestID": "e1c25505-9cc4-4f14-8180-c89257d3d43a",
   "paymentRequestTimestamp": "2019-08-24T14:15:22Z",
   "dueDate": "2019-08-24T14:15:22Z",
@@ -919,14 +781,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -960,29 +815,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "redirectUrl": "string",
   "onlyAddCard": true,
   "showAuthCode": true,
-  "transactionType": "regularDeal",
-  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-  "terminalName": "string",
-  "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-  "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
-  "paymentRequestUrl": "string",
-  "history": [
-    {
-      "paymentRequestHistoryID": "a27f677d-9bac-4614-b73b-38acec040a90",
-      "operationDate": "2019-08-24T14:15:22Z",
-      "operationDoneBy": "string",
-      "operationCode": "PaymentRequestCreated",
-      "operationMessage": "string"
-    }
-  ],
-  "userPaidDetails": {
-    "vatRate": 0,
-    "vatTotal": 0,
-    "netTotal": 0,
-    "transactionAmount": 0
-  },
-  "amount": 0,
-  "origin": "string"
+  "transactionType": "regularDeal"
 }
 ```
 
@@ -1017,7 +850,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "3deac440-8c72-443b-ad79-1eb068160ff0",
+  "correlationId": "542411b2-831f-42a3-b32d-3e135d6b8591",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -1072,14 +905,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -1135,14 +961,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "redirectUrl": "string",
   "userAmount": true,
   "cardOwnerNationalID": "string",
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "language": "string",
   "origin": "string",
   "allowInstallments": true,
@@ -1169,7 +988,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Payment Request Created",
   "status": "success",
-  "entityUID": "0368a926-1e8e-41be-921d-ff2d4df85d6a",
+  "entityUID": "f298ae2f-32e1-4e2b-8913-fdfcc269f83a",
   "additionalData": {
     "url": "https://checkout.e-c.co.il/i?r=4xgxjJrpKhOgdJa01YhT9fMy7AHdUi1XmWralF9lbbnB0nTGB1vw%3d%3d"
   }
@@ -1182,7 +1001,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "c1e58258-a822-45b3-9a05-b00a2be37c52",
+  "correlationId": "78a81b48-8be6-4258-8251-ffbe552f80ba",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -1198,7 +1017,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Entity Not Found",
   "status": "error",
-  "correlationId": "60ff26b7-4860-4da2-8af6-c823af787a88",
+  "correlationId": "5a088983-c333-40f8-bf31-3f39ad2f30ed",
   "entityType": "Consumer"
 }
 ```
@@ -1207,7 +1026,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
@@ -1230,16 +1049,12 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 |---|---|---|---|---|
 |TerminalID|query|string(uuid)|false|none|
 |PaymentRequestID|query|string(uuid)|false|none|
-|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|
-|
-|QuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|
-|
+|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|none|
+|QuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|none|
 |DateFrom|query|string(date)|false|none|
 |DateTo|query|string(date)|false|none|
-|Status|query|[PaymentRequestStatusEnum](#schemapaymentrequeststatusenum)|false|
-|
-|QuickStatus|query|[PayReqQuickStatusFilterTypeEnum](#schemapayreqquickstatusfiltertypeenum)|false|
-|
+|Status|query|[PaymentRequestStatusEnum](#schemapaymentrequeststatusenum)|false|none|
+|QuickStatus|query|[PayReqQuickStatusFilterTypeEnum](#schemapayreqquickstatusfiltertypeenum)|false|none|
 |PaymentRequestAmount|query|number(double)|false|none|
 |ConsumerID|query|string(uuid)|false|none|
 |ConsumerExternalReference|query|string|false|none|
@@ -1247,112 +1062,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 |Skip|query|integer(int32)|false|none|
 |SortBy|query|string|false|none|
 |SortDesc|query|boolean|false|none|
-|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|
-|
-
-#### Detailed descriptions
-
-**Currency**: 
-
-ILS
-
-USD
-
-EUR
-
-**QuickDateFilter**: 
-
-today
-
-yesterday
-
-thisWeek
-
-lastWeek
-
-last30Days
-
-thisMonth
-
-lastMonth
-
-last3Months
-
-**Status**: 
-
-initial
-
-sending
-
-sent
-
-viewed
-
-payed
-
-paymentFailed
-
-rejected
-
-canceled
-
-sendingFailed
-
-**QuickStatus**: 
-
-pending
-
-completed
-
-failed
-
-canceled
-
-overdue
-
-viewed
-
-**ShowDeleted**: 
-
-OnlyActive
-
-OnlyDeleted
-
-All
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|Currency|ILS|
-|Currency|USD|
-|Currency|EUR|
-|QuickDateFilter|today|
-|QuickDateFilter|yesterday|
-|QuickDateFilter|thisWeek|
-|QuickDateFilter|lastWeek|
-|QuickDateFilter|last30Days|
-|QuickDateFilter|thisMonth|
-|QuickDateFilter|lastMonth|
-|QuickDateFilter|last3Months|
-|Status|initial|
-|Status|sending|
-|Status|sent|
-|Status|viewed|
-|Status|payed|
-|Status|paymentFailed|
-|Status|rejected|
-|Status|canceled|
-|Status|sendingFailed|
-|QuickStatus|pending|
-|QuickStatus|completed|
-|QuickStatus|failed|
-|QuickStatus|canceled|
-|QuickStatus|overdue|
-|QuickStatus|viewed|
-|ShowDeleted|OnlyActive|
-|ShowDeleted|OnlyDeleted|
-|ShowDeleted|All|
+|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
 
 > Example responses
 
@@ -1360,6 +1070,9 @@ All
 
 ```json
 {
+  "totalAmountILS": 0,
+  "totalAmountUSD": 0,
+  "totalAmountEUR": 0,
   "numberOfRecords": 0,
   "data": [
     {
@@ -1377,10 +1090,7 @@ All
       "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
       "isRefund": true
     }
-  ],
-  "totalAmountILS": 0,
-  "totalAmountUSD": 0,
-  "totalAmountEUR": 0
+  ]
 }
 ```
 
@@ -1388,7 +1098,7 @@ All
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesAmountResponse`1_PaymentRequestSummary](#schemasummariesamountresponse`1_paymentrequestsummary)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesAmountResponse_PaymentRequestSummary](#schemasummariesamountresponse_paymentrequestsummary)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -1429,14 +1139,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -1492,14 +1195,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "redirectUrl": "string",
   "userAmount": true,
   "cardOwnerNationalID": "string",
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "language": "string",
   "origin": "string",
   "allowInstallments": true,
@@ -1526,7 +1222,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "3f98b26a-6b81-4de3-8e3f-e975ea053ef4",
+  "correlationId": "c4442a45-38d7-4578-8f87-249becbe26b4",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -1540,7 +1236,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -1565,6 +1261,28 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
+  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+  "terminalName": "string",
+  "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+  "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
+  "paymentRequestUrl": "string",
+  "history": [
+    {
+      "paymentRequestHistoryID": "a27f677d-9bac-4614-b73b-38acec040a90",
+      "operationDate": "2019-08-24T14:15:22Z",
+      "operationDoneBy": "string",
+      "operationCode": "PaymentRequestCreated",
+      "operationMessage": "string"
+    }
+  ],
+  "userPaidDetails": {
+    "vatRate": 0,
+    "vatTotal": 0,
+    "netTotal": 0,
+    "transactionAmount": 0
+  },
+  "amount": 0,
+  "origin": "string",
   "paymentRequestID": "e1c25505-9cc4-4f14-8180-c89257d3d43a",
   "paymentRequestTimestamp": "2019-08-24T14:15:22Z",
   "dueDate": "2019-08-24T14:15:22Z",
@@ -1596,14 +1314,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -1637,29 +1348,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "redirectUrl": "string",
   "onlyAddCard": true,
   "showAuthCode": true,
-  "transactionType": "regularDeal",
-  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-  "terminalName": "string",
-  "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-  "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
-  "paymentRequestUrl": "string",
-  "history": [
-    {
-      "paymentRequestHistoryID": "a27f677d-9bac-4614-b73b-38acec040a90",
-      "operationDate": "2019-08-24T14:15:22Z",
-      "operationDoneBy": "string",
-      "operationCode": "PaymentRequestCreated",
-      "operationMessage": "string"
-    }
-  ],
-  "userPaidDetails": {
-    "vatRate": 0,
-    "vatTotal": 0,
-    "netTotal": 0,
-    "transactionAmount": 0
-  },
-  "amount": 0,
-  "origin": "string"
+  "transactionType": "regularDeal"
 }
 ```
 
@@ -1694,7 +1383,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "af5daa1a-6b1f-48c3-aa8b-04413c43e0bf",
+  "correlationId": "42cf05c3-c2d8-4029-8b30-2ada6e339403",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -1735,9 +1424,9 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
-  "paymentTransactionID": "80c5a1e0-b9de-4628-8dcf-66620b0c711f",
+  "paymentTransactionID": "bf54f8bc-b997-4345-b37b-8eb3328651d0",
   "transactionDate": "2022-10-07T00:00:00",
-  "transactionTimestamp": "2022-10-07T10:32:47.0958817Z",
+  "transactionTimestamp": "2022-10-07T15:08:18.7523005Z",
   "status": "awaitingForTransmission",
   "paymentTypeEnum": "card",
   "quickStatus": 0,
@@ -1764,7 +1453,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
     "dealDescription": "some product pack: 3kg.",
     "consumerEmail": "email@example.com",
     "consumerPhone": "555-765",
-    "consumerID": "7174a078-b751-4c42-b253-af0e5217ef6f"
+    "consumerID": "fc5056e5-6b9b-429c-988d-74072e12189d"
   },
   "shvaTransactionDetails": {
     "shvaShovarNumber": "123456",
@@ -1773,11 +1462,11 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "vatRate": 0.17,
   "vatTotal": 174.36,
   "netTotal": 1025.64,
-  "correlationId": "e12763fe-de30-4f30-bfe1-edc44163be3d",
-  "invoiceID": "2d96449f-b281-4a85-8e5d-2eae9c3839eb",
+  "correlationId": "5347f8d2-4357-4623-a92d-11fb848832c4",
+  "invoiceID": "7508f660-1341-45a8-92aa-e836c36f722b",
   "issueInvoice": true,
   "documentOrigin": "checkout",
-  "paymentRequestID": "5a0703d1-2844-492c-aa1c-37d272bce3ae",
+  "paymentRequestID": "98f7eba5-9ab0-4023-81f1-cbecb45a3d4f",
   "extension": {
     "customPropertyInMySystem": "MyCustomValue"
   },
@@ -1816,21 +1505,14 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 |PaymentTransactionIntentID|query|string(uuid)|false|none|
 |AmountFrom|query|number(double)|false|none|
 |AmountTo|query|number(double)|false|none|
-|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|
-|
-|QuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|
-|
-|TransmissionQuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|
-|
-|QuickStatusFilter|query|[QuickStatusFilterTypeEnum](#schemaquickstatusfiltertypeenum)|false|
-|
-|Statuses|query|array[integer]|false|none|
-|TransactionType|query|[TransactionTypeEnum](#schematransactiontypeenum)|false|
-|
-|JDealType|query|[JDealTypeEnum](#schemajdealtypeenum)|false|
-|
-|CardPresence|query|[CardPresenceEnum](#schemacardpresenceenum)|false|
-|
+|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|none|
+|QuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|none|
+|TransmissionQuickDateFilter|query|[QuickDateFilterTypeEnum](#schemaquickdatefiltertypeenum)|false|none|
+|QuickStatusFilter|query|[QuickStatusFilterTypeEnum](#schemaquickstatusfiltertypeenum)|false|none|
+|Statuses|query|array[string]|false|none|
+|TransactionType|query|[TransactionTypeEnum](#schematransactiontypeenum)|false|none|
+|JDealType|query|[JDealTypeEnum](#schemajdealtypeenum)|false|none|
+|CardPresence|query|[CardPresenceEnum](#schemacardpresenceenum)|false|none|
 |ShvaShovarNumber|query|string|false|none|
 |ShvaTransactionID|query|string|false|none|
 |ClearingHouseTransactionID|query|integer(int64)|false|none|
@@ -1844,23 +1526,17 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 |ConsumerEmail|query|string|false|End-customer Email|
 |DealReference|query|string|false|Merchant deal reference|
 |DealDescription|query|string|false|none|
-|Solek|query|[SolekEnum](#schemasolekenum)|false|
-|
+|Solek|query|[SolekEnum](#schemasolekenum)|false|none|
 |CreditCardVendor|query|string|false|none|
 |BillingDealID|query|string(uuid)|false|none|
-|SpecialTransactionType|query|[SpecialTransactionTypeEnum](#schemaspecialtransactiontypeenum)|false|
-|
+|SpecialTransactionType|query|[SpecialTransactionTypeEnum](#schemaspecialtransactiontypeenum)|false|none|
 |NotTransmitted|query|boolean|false|none|
 |TerminalTemplateID|query|integer(int64)|false|none|
-|FinalizationStatus|query|[TransactionFinalizationStatusEnum](#schematransactionfinalizationstatusenum)|false|
-|
-|DocumentOrigin|query|[DocumentOriginEnum](#schemadocumentoriginenum)|false|
-|
-|HasInvoice|query|[PropertyPresenceEnum](#schemapropertypresenceenum)|false|
-|
+|FinalizationStatus|query|[TransactionFinalizationStatusEnum](#schematransactionfinalizationstatusenum)|false|none|
+|DocumentOrigin|query|[DocumentOriginEnum](#schemadocumentoriginenum)|false|none|
+|HasInvoice|query|[PropertyPresenceEnum](#schemapropertypresenceenum)|false|none|
 |IsPaymentRequest|query|boolean|false|none|
-|PaymentType|query|[PaymentTypeEnum](#schemapaymenttypeenum)|false|
-|
+|PaymentType|query|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|
 |ShvaDealIDLastDigits|query|string|false|none|
 |PaymentTransactionIDShort|query|string|false|none|
 |HasMasavFile|query|boolean|false|none|
@@ -1870,266 +1546,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 |Skip|query|integer(int32)|false|none|
 |SortBy|query|string|false|none|
 |SortDesc|query|boolean|false|none|
-|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|
-|
-
-#### Detailed descriptions
-
-**Currency**: 
-
-ILS
-
-USD
-
-EUR
-
-**QuickDateFilter**: 
-
-today
-
-yesterday
-
-thisWeek
-
-lastWeek
-
-last30Days
-
-thisMonth
-
-lastMonth
-
-last3Months
-
-**TransmissionQuickDateFilter**: 
-
-today
-
-yesterday
-
-thisWeek
-
-lastWeek
-
-last30Days
-
-thisMonth
-
-lastMonth
-
-last3Months
-
-**QuickStatusFilter**: 
-
-Pending
-
-Completed
-
-Failed
-
-Canceled
-
-AwaitingForTransmission
-
-Chargeback
-
-**TransactionType**: 
-
-regularDeal (Simple deal type)
-
-installments (Deal to pay by parts)
-
-credit (Credit deal)
-
-immediate (Credit deal)
-
-**JDealType**: 
-
-J4 (Regular deal)
-
-J2 (Check)
-
-J5 (Block card)
-
-**CardPresence**: 
-
-cardNotPresent
-
-regular
-
-Internet
-
-**Solek**: 
-
-UNKNOWN
-
-ISRACARD
-
-VISA
-
-DINERS_CLUB
-
-AMEX
-
-JCB
-
-DISCOVER
-
-LEUMI_CARD
-
-OTHER
-
-MASTERCARD
-
-**SpecialTransactionType**: 
-
-regularDeal
-
-initialDeal
-
-refund
-
-**FinalizationStatus**: 
-
-initial
-
-failedToCancelByAggregator
-
-canceledByAggregator
-
-**DocumentOrigin**: 
-
-UI (Document created manually by merchant user using Merchant's UI)
-
-API (Document created via API)
-
-checkout (Document created by consumer using Checkout Page)
-
-billing (Document generated based on billing schedule)
-
-device (Transaction created using pinpad device (or other device))
-
-paymentRequest (Document created by consumer using Checkout Page with a payment link)
-
-bit (Document created by consumer using Bit)
-
-**HasInvoice**: 
-
-All
-
-Yes
-
-No
-
-**PaymentType**: 
-
-card
-
-cheque
-
-cash
-
-bank
-
-**ShowDeleted**: 
-
-OnlyActive
-
-OnlyDeleted
-
-All
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|Currency|ILS|
-|Currency|USD|
-|Currency|EUR|
-|QuickDateFilter|today|
-|QuickDateFilter|yesterday|
-|QuickDateFilter|thisWeek|
-|QuickDateFilter|lastWeek|
-|QuickDateFilter|last30Days|
-|QuickDateFilter|thisMonth|
-|QuickDateFilter|lastMonth|
-|QuickDateFilter|last3Months|
-|TransmissionQuickDateFilter|today|
-|TransmissionQuickDateFilter|yesterday|
-|TransmissionQuickDateFilter|thisWeek|
-|TransmissionQuickDateFilter|lastWeek|
-|TransmissionQuickDateFilter|last30Days|
-|TransmissionQuickDateFilter|thisMonth|
-|TransmissionQuickDateFilter|lastMonth|
-|TransmissionQuickDateFilter|last3Months|
-|QuickStatusFilter|Pending|
-|QuickStatusFilter|Completed|
-|QuickStatusFilter|Failed|
-|QuickStatusFilter|Canceled|
-|QuickStatusFilter|AwaitingForTransmission|
-|QuickStatusFilter|Chargeback|
-|Statuses|initial|
-|Statuses|confirmedByAggregator|
-|Statuses|confirmedByPinpadPreProcessor|
-|Statuses|confirmedByProcessor|
-|Statuses|awaitingForTransmission|
-|Statuses|transmissionInProgress|
-|Statuses|transmissionCancelingInProgress|
-|Statuses|completed|
-|Statuses|awaitingToSelectJ5|
-|Statuses|chargeback|
-|Statuses|chargebackFailed|
-|Statuses|transmissionToProcessorFailed|
-|Statuses|failedToCommitByAggregator|
-|Statuses|failedToConfirmByProcesor|
-|Statuses|failedToConfirmByAggregator|
-|Statuses|cancelledByMerchant|
-|Statuses|rejectedByProcessor|
-|Statuses|rejectedByAggregator|
-|Statuses|rejectedBy3Dsecure|
-|TransactionType|regularDeal|
-|TransactionType|installments|
-|TransactionType|credit|
-|TransactionType|immediate|
-|JDealType|J4|
-|JDealType|J2|
-|JDealType|J5|
-|CardPresence|cardNotPresent|
-|CardPresence|regular|
-|CardPresence|Internet|
-|Solek|UNKNOWN|
-|Solek|ISRACARD|
-|Solek|VISA|
-|Solek|DINERS_CLUB|
-|Solek|AMEX|
-|Solek|JCB|
-|Solek|DISCOVER|
-|Solek|LEUMI_CARD|
-|Solek|OTHER|
-|Solek|MASTERCARD|
-|SpecialTransactionType|regularDeal|
-|SpecialTransactionType|initialDeal|
-|SpecialTransactionType|refund|
-|FinalizationStatus|initial|
-|FinalizationStatus|failedToCancelByAggregator|
-|FinalizationStatus|canceledByAggregator|
-|DocumentOrigin|UI|
-|DocumentOrigin|API|
-|DocumentOrigin|checkout|
-|DocumentOrigin|billing|
-|DocumentOrigin|device|
-|DocumentOrigin|paymentRequest|
-|DocumentOrigin|bit|
-|HasInvoice|All|
-|HasInvoice|Yes|
-|HasInvoice|No|
-|PaymentType|card|
-|PaymentType|cheque|
-|PaymentType|cash|
-|PaymentType|bank|
-|ShowDeleted|OnlyActive|
-|ShowDeleted|OnlyDeleted|
-|ShowDeleted|All|
+|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
 
 > Example responses
 
@@ -2137,6 +1554,9 @@ All
 
 ```json
 {
+  "totalAmountILS": 0,
+  "totalAmountUSD": 0,
+  "totalAmountEUR": 0,
   "numberOfRecords": 0,
   "data": [
     {
@@ -2166,10 +1586,7 @@ All
       "invoiceID": "4f03a727-9c4b-43a5-b699-271a3e6fdc9c",
       "dealDescription": "string"
     }
-  ],
-  "totalAmountILS": 0,
-  "totalAmountUSD": 0,
-  "totalAmountEUR": 0
+  ]
 }
 ```
 
@@ -2177,7 +1594,7 @@ All
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesAmountResponse`1_TransactionSummary](#schemasummariesamountresponse`1_transactionsummary)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesAmountResponse_TransactionSummary](#schemasummariesamountresponse_transactionsummary)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -2194,63 +1611,14 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "transactionType": "regularDeal",
   "currency": "ILS",
   "paymentTypeEnum": "card",
   "cardPresence": "cardNotPresent",
   "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
     "cardNumber": "stringstr",
     "cardExpiration": {
       "year": 20,
@@ -2262,18 +1630,16 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
     "solek": "string",
     "cardOwnerName": "string",
     "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
+    "cardReaderInput": "string"
   },
   "bankTransferDetails": {
-    "paymentType": "card",
-    "amount": 0,
+    "dueDate": "2019-08-24T14:15:22Z",
+    "reference": "string",
     "bank": 0,
     "bankBranch": 0,
     "bankAccount": "string",
-    "dueDate": "2019-08-24T14:15:22Z",
-    "reference": "string"
+    "paymentType": "card",
+    "amount": 0
   },
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
   "transactionAmount": 0.01,
@@ -2309,65 +1675,10 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "cardOwnerNationalID": "string",
   "cardOwnerName": "string",
   "connectionID": "string",
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "threeDSServerTransID": "string",
   "origin": "string",
-  "userAmount": true
-}
-```
-
-<h3 id="create-the-charge-based-on-credit-card-or-previously-stored-credit-card-token-(j4-deal)-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[CreateTransactionRequest](#schemacreatetransactionrequest)|false|none|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "message": "Validation Errors",
-  "status": "error",
-  "correlationId": "6b31219e-8d0a-447a-965e-947fa97fc1a4",
-  "errors": [
-    {
-      "code": "paymentRequestAmount",
-      "description": "Could not convert string to decimal: 1200$. Path 'paymentRequestAmount', line 10, position 33."
-    }
-  ]
-}
-```
-
-<h3 id="create-the-charge-based-on-credit-card-or-previously-stored-credit-card-token-(j4-deal)-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None ( Scopes: terminal_or_merchant_frontend_or_admin )
-</aside>
-
-## Blocking funds on credit card (J5 deal)
-
-`POST /api/transactions/blocking`
-
-> Body parameter
-
-```json
-{
+  "userAmount": true,
   "dealDetails": {
     "dealReference": "string",
     "dealDescription": "string",
@@ -2391,14 +1702,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -2418,11 +1722,61 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
     "externalUserID": "string",
     "branch": "string",
     "department": "string"
-  },
+  }
+}
+```
+
+<h3 id="create-the-charge-based-on-credit-card-or-previously-stored-credit-card-token-(j4-deal)-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateTransactionRequest](#schemacreatetransactionrequest)|false|none|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "message": "Validation Errors",
+  "status": "error",
+  "correlationId": "d9f18253-22c5-4edf-a753-fd1b35ea40c0",
+  "errors": [
+    {
+      "code": "paymentRequestAmount",
+      "description": "Could not convert string to decimal: 1200$. Path 'paymentRequestAmount', line 10, position 33."
+    }
+  ]
+}
+```
+
+<h3 id="create-the-charge-based-on-credit-card-or-previously-stored-credit-card-token-(j4-deal)-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend_or_admin )
+</aside>
+
+## Blocking funds on credit card (J5 deal)
+
+`POST /api/transactions/blocking`
+
+> Body parameter
+
+```json
+{
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "cardPresence": "cardNotPresent",
   "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
     "cardNumber": "stringstr",
     "cardExpiration": {
       "year": 20,
@@ -2434,12 +1788,54 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
     "solek": "string",
     "cardOwnerName": "string",
     "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
+    "cardReaderInput": "string"
   },
   "creditCardToken": "string",
-  "transactionAmount": 0.01
+  "transactionAmount": 0.01,
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
+  }
 }
 ```
 
@@ -2457,7 +1853,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "6ebf55a8-55c6-4472-a4a1-131577b90f54",
+  "correlationId": "ff74f559-b73a-4178-a40d-28b1591c0e07",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -2471,7 +1867,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -2498,7 +1894,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "dcef7ca4-900a-49de-9573-f231602b271c",
+  "correlationId": "64908061-eac8-4ed0-aed6-cd6af268ae47",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -2512,7 +1908,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -2529,6 +1925,26 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
+  "currency": "ILS",
+  "cardPresence": "cardNotPresent",
+  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+  "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
+    "cardNumber": "stringstr",
+    "cardExpiration": {
+      "year": 20,
+      "month": 1,
+      "expired": true
+    },
+    "cardVendor": "string",
+    "cardBrand": "string",
+    "solek": "string",
+    "cardOwnerName": "string",
+    "cardOwnerNationalID": "string",
+    "cardReaderInput": "string"
+  },
+  "creditCardToken": "string",
   "dealDetails": {
     "dealReference": "string",
     "dealDescription": "string",
@@ -2552,14 +1968,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -2579,27 +1988,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
     "externalUserID": "string",
     "branch": "string",
     "department": "string"
-  },
-  "currency": "ILS",
-  "cardPresence": "cardNotPresent",
-  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-  "creditCardSecureDetails": {
-    "cardNumber": "stringstr",
-    "cardExpiration": {
-      "year": 20,
-      "month": 1,
-      "expired": true
-    },
-    "cardVendor": "string",
-    "cardBrand": "string",
-    "solek": "string",
-    "cardOwnerName": "string",
-    "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
-  },
-  "creditCardToken": "string"
+  }
 }
 ```
 
@@ -2617,7 +2006,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "3099cc0e-fdaf-45f4-a908-04626d09f6d2",
+  "correlationId": "40c18f46-4727-42c4-a18c-50639fa2ca8e",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -2631,7 +2020,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -2648,61 +2037,12 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "cardPresence": "cardNotPresent",
   "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
     "cardNumber": "stringstr",
     "cardExpiration": {
       "year": 20,
@@ -2714,9 +2054,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
     "solek": "string",
     "cardOwnerName": "string",
     "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
+    "cardReaderInput": "string"
   },
   "creditCardToken": "string",
   "transactionAmount": 0.01,
@@ -2744,7 +2082,51 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
   "transactionType": "regularDeal",
   "cardOwnerNationalID": "string",
   "connectionID": "string",
-  "okNumber": "string"
+  "okNumber": "string",
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
+  }
 }
 ```
 
@@ -2762,7 +2144,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "71502346-9277-4bc6-a66f-1f61ba2caf02",
+  "correlationId": "3bf5b990-bccc-4654-bc74-32f185c597c4",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -2776,13 +2158,13 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None ( Scopes: terminal_or_merchant_frontend_or_admin terminal_or_manager_or_admin )
+None ( Scopes: terminal_or_manager_or_admin terminal_or_merchant_frontend_or_admin )
 </aside>
 
 ## Refund or chargeback of and existing transaction
@@ -2812,7 +2194,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin terminal_or_manager_or_adm
 {
   "message": "Validation Errors",
   "status": "error",
-  "correlationId": "3b306b2f-91e6-4f3b-9f20-4e82bd3c79ef",
+  "correlationId": "30d75be8-3073-4942-bd2d-587f6ca45aa0",
   "errors": [
     {
       "code": "paymentRequestAmount",
@@ -2826,13 +2208,13 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin terminal_or_manager_or_adm
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None ( Scopes: terminal_or_merchant_frontend_or_admin terminal_or_manager_or_admin )
+None ( Scopes: terminal_or_manager_or_admin terminal_or_merchant_frontend_or_admin )
 </aside>
 
 # Webhooks
@@ -2850,26 +2232,7 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin terminal_or_manager_or_adm
 |Skip|query|integer(int32)|false|none|
 |SortBy|query|string|false|none|
 |SortDesc|query|boolean|false|none|
-|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|
-|
-
-#### Detailed descriptions
-
-**ShowDeleted**: 
-
-OnlyActive
-
-OnlyDeleted
-
-All
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|ShowDeleted|OnlyActive|
-|ShowDeleted|OnlyDeleted|
-|ShowDeleted|All|
+|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
 
 > Example responses
 
@@ -2895,7 +2258,7 @@ All
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesResponse`1_ExecutedWebhookSummary](#schemasummariesresponse`1_executedwebhooksummary)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesResponse_ExecutedWebhookSummary](#schemasummariesresponse_executedwebhooksummary)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
@@ -2945,11 +2308,11 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ```json
 {
-  "paymentType": "card",
-  "amount": 0,
   "bank": 0,
   "bankBranch": 0,
-  "bankAccount": "string"
+  "bankAccount": "string",
+  "paymentType": "card",
+  "amount": 0
 }
 
 ```
@@ -2960,11 +2323,11 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
-|amount|number(double)|false|none|none|
 |bank|integer(int32)|true|none|none|
 |bankBranch|integer(int32)|true|none|none|
 |bankAccount|string|true|none|none|
+|paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
+|amount|number(double)|false|none|none|
 
 <h2 id="tocS_BankTransferDetails">BankTransferDetails</h2>
 <!-- backwards compatibility -->
@@ -2975,13 +2338,13 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
 
 ```json
 {
-  "paymentType": "card",
-  "amount": 0,
+  "dueDate": "2019-08-24T14:15:22Z",
+  "reference": "string",
   "bank": 0,
   "bankBranch": 0,
   "bankAccount": "string",
-  "dueDate": "2019-08-24T14:15:22Z",
-  "reference": "string"
+  "paymentType": "card",
+  "amount": 0
 }
 
 ```
@@ -2990,13 +2353,13 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
-|amount|number(double)|false|none|none|
+|dueDate|string(date-time)¦null|false|none|none|
+|reference|string¦null|false|none|none|
 |bank|integer(int32)|true|none|none|
 |bankBranch|integer(int32)|true|none|none|
 |bankAccount|string|true|none|none|
-|dueDate|string(date-time)¦null|false|none|none|
-|reference|string¦null|false|none|none|
+|paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
+|amount|number(double)|false|none|none|
 
 <h2 id="tocS_BillingDealRequest">BillingDealRequest</h2>
 <!-- backwards compatibility -->
@@ -3007,57 +2370,6 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
@@ -3085,13 +2397,57 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
   },
   "paymentType": "card",
   "bankDetails": {
-    "paymentType": "card",
-    "amount": 0,
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
   },
-  "origin": "string"
+  "origin": "string",
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
+  }
 }
 
 ```
@@ -3100,7 +2456,6 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 |terminalID|string(uuid)¦null|false|none|EasyCard terminal reference|
 |currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
 |creditCardToken|string(uuid)¦null|false|none|Stored credit card details token (should be omitted in case if full credit card details used)|
@@ -3114,6 +2469,7 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
 |paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
 |bankDetails|[BankDetails](#schemabankdetails)|false|none|For billing deal only. For invoice and payment transaction use <see cref="T:Shared.Integration.Models.PaymentDetails.BankTransferDetails"></see>|
 |origin|string¦null|false|none|none|
+|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 
 <h2 id="tocS_BillingDealResponse">BillingDealResponse</h2>
 <!-- backwards compatibility -->
@@ -3153,11 +2509,11 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
     "cardReaderInput": "string"
   },
   "bankDetails": {
-    "paymentType": "card",
-    "amount": 0,
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
   },
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
   "dealDetails": {
@@ -3183,14 +2539,7 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -3370,14 +2719,7 @@ For billing deal only. For invoice and payment transaction use <see cref="T:Shar
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -3451,20 +2793,6 @@ InvoiceOnly
 
 Bank
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|CreditCard<br><br>InvoiceOnly<br><br>Bank|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|CreditCard|
-|*anonymous*|InvoiceOnly|
-|*anonymous*|Bank|
-
 <h2 id="tocS_BillingDealUpdateRequest">BillingDealUpdateRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemabillingdealupdaterequest"></a>
@@ -3474,57 +2802,6 @@ Bank
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
@@ -3552,11 +2829,55 @@ Bank
   },
   "paymentType": "card",
   "bankDetails": {
-    "paymentType": "card",
-    "amount": 0,
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
   }
 }
 
@@ -3566,7 +2887,6 @@ Bank
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 |terminalID|string(uuid)¦null|false|none|EasyCard terminal reference|
 |currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
 |creditCardToken|string(uuid)¦null|false|none|Stored credit card details token (should be omitted in case if full credit card details used)|
@@ -3579,6 +2899,7 @@ Bank
 |invoiceDetails|[InvoiceDetails](#schemainvoicedetails)|false|none|none|
 |paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
 |bankDetails|[BankDetails](#schemabankdetails)|false|none|For billing deal only. For invoice and payment transaction use <see cref="T:Shared.Integration.Models.PaymentDetails.BankTransferDetails"></see>|
+|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 
 <h2 id="tocS_BillingSchedule">BillingSchedule</h2>
 <!-- backwards compatibility -->
@@ -3642,27 +2963,6 @@ ManualTrigger
 
 InProgress
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|All<br><br>Completed<br><br>Inactive<br><br>Failed<br><br>CardExpired<br><br>TriggeredTomorrow<br><br>Paused<br><br>ExpiredNextMonth<br><br>ManualTrigger<br><br>InProgress|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|All|
-|*anonymous*|Completed|
-|*anonymous*|Inactive|
-|*anonymous*|Failed|
-|*anonymous*|CardExpired|
-|*anonymous*|TriggeredTomorrow|
-|*anonymous*|Paused|
-|*anonymous*|ExpiredNextMonth|
-|*anonymous*|ManualTrigger|
-|*anonymous*|InProgress|
-
 <h2 id="tocS_BlockCreditCardRequest">BlockCreditCardRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemablockcreditcardrequest"></a>
@@ -3672,6 +2972,27 @@ InProgress
 
 ```json
 {
+  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+  "currency": "ILS",
+  "cardPresence": "cardNotPresent",
+  "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
+    "cardNumber": "stringstr",
+    "cardExpiration": {
+      "year": 20,
+      "month": 1,
+      "expired": true
+    },
+    "cardVendor": "string",
+    "cardBrand": "string",
+    "solek": "string",
+    "cardOwnerName": "string",
+    "cardOwnerNationalID": "string",
+    "cardReaderInput": "string"
+  },
+  "creditCardToken": "string",
+  "transactionAmount": 0.01,
   "dealDetails": {
     "dealReference": "string",
     "dealDescription": "string",
@@ -3695,14 +3016,7 @@ InProgress
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -3722,28 +3036,7 @@ InProgress
     "externalUserID": "string",
     "branch": "string",
     "department": "string"
-  },
-  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-  "currency": "ILS",
-  "cardPresence": "cardNotPresent",
-  "creditCardSecureDetails": {
-    "cardNumber": "stringstr",
-    "cardExpiration": {
-      "year": 20,
-      "month": 1,
-      "expired": true
-    },
-    "cardVendor": "string",
-    "cardBrand": "string",
-    "solek": "string",
-    "cardOwnerName": "string",
-    "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
-  },
-  "creditCardToken": "string",
-  "transactionAmount": 0.01
+  }
 }
 
 ```
@@ -3754,13 +3047,13 @@ Blocking funds on credit card
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 |terminalID|string(uuid)|true|none|EasyCard terminal reference|
 |currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
 |cardPresence|[CardPresenceEnum](#schemacardpresenceenum)|false|none|Is the card physically scanned<br><br>cardNotPresent<br><br>regular<br><br>Internet|
 |creditCardSecureDetails|[CreditCardSecureDetails](#schemacreditcardsecuredetails)|false|none|none|
 |creditCardToken|string¦null|false|none|Stored credit card details token (should be omitted in case if full credit card details used)|
 |transactionAmount|number(currency)|true|none|Transaction amount|
+|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 
 <h2 id="tocS_CardExpiration">CardExpiration</h2>
 <!-- backwards compatibility -->
@@ -3806,20 +3099,6 @@ regular
 
 Internet
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|Is the card physically scanned<br><br>cardNotPresent<br><br>regular<br><br>Internet|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|cardNotPresent|
-|*anonymous*|regular|
-|*anonymous*|Internet|
-
 <h2 id="tocS_ChargebackRequest">ChargebackRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemachargebackrequest"></a>
@@ -3851,6 +3130,26 @@ Internet
 
 ```json
 {
+  "currency": "ILS",
+  "cardPresence": "cardNotPresent",
+  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+  "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
+    "cardNumber": "stringstr",
+    "cardExpiration": {
+      "year": 20,
+      "month": 1,
+      "expired": true
+    },
+    "cardVendor": "string",
+    "cardBrand": "string",
+    "solek": "string",
+    "cardOwnerName": "string",
+    "cardOwnerNationalID": "string",
+    "cardReaderInput": "string"
+  },
+  "creditCardToken": "string",
   "dealDetails": {
     "dealReference": "string",
     "dealDescription": "string",
@@ -3874,14 +3173,7 @@ Internet
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -3901,27 +3193,7 @@ Internet
     "externalUserID": "string",
     "branch": "string",
     "department": "string"
-  },
-  "currency": "ILS",
-  "cardPresence": "cardNotPresent",
-  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-  "creditCardSecureDetails": {
-    "cardNumber": "stringstr",
-    "cardExpiration": {
-      "year": 20,
-      "month": 1,
-      "expired": true
-    },
-    "cardVendor": "string",
-    "cardBrand": "string",
-    "solek": "string",
-    "cardOwnerName": "string",
-    "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
-  },
-  "creditCardToken": "string"
+  }
 }
 
 ```
@@ -3932,12 +3204,12 @@ Check if credit card is valid
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 |currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
 |cardPresence|[CardPresenceEnum](#schemacardpresenceenum)|false|none|Is the card physically scanned<br><br>cardNotPresent<br><br>regular<br><br>Internet|
 |terminalID|string(uuid)|true|none|EasyCard terminal reference|
 |creditCardSecureDetails|[CreditCardSecureDetails](#schemacreditcardsecuredetails)|false|none|none|
 |creditCardToken|string¦null|false|none|Stored credit card details token (should be omitted in case if full credit card details used)|
+|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 
 <h2 id="tocS_CreateTransactionRequest">CreateTransactionRequest</h2>
 <!-- backwards compatibility -->
@@ -3948,63 +3220,14 @@ Check if credit card is valid
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "transactionType": "regularDeal",
   "currency": "ILS",
   "paymentTypeEnum": "card",
   "cardPresence": "cardNotPresent",
   "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
     "cardNumber": "stringstr",
     "cardExpiration": {
       "year": 20,
@@ -4016,18 +3239,16 @@ Check if credit card is valid
     "solek": "string",
     "cardOwnerName": "string",
     "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
+    "cardReaderInput": "string"
   },
   "bankTransferDetails": {
-    "paymentType": "card",
-    "amount": 0,
+    "dueDate": "2019-08-24T14:15:22Z",
+    "reference": "string",
     "bank": 0,
     "bankBranch": 0,
     "bankAccount": "string",
-    "dueDate": "2019-08-24T14:15:22Z",
-    "reference": "string"
+    "paymentType": "card",
+    "amount": 0
   },
   "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
   "transactionAmount": 0.01,
@@ -4063,17 +3284,54 @@ Check if credit card is valid
   "cardOwnerNationalID": "string",
   "cardOwnerName": "string",
   "connectionID": "string",
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "threeDSServerTransID": "string",
   "origin": "string",
-  "userAmount": true
+  "userAmount": true,
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
+  }
 }
 
 ```
@@ -4084,7 +3342,6 @@ Create the charge based on credit card or previously stored credit card token
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 |terminalID|string(uuid)|true|none|EasyCard terminal reference|
 |transactionType|[TransactionTypeEnum](#schematransactiontypeenum)|false|none|Generic transaction type<br><br>regularDeal (Simple deal type)<br><br>installments (Deal to pay by parts)<br><br>credit (Credit deal)<br><br>immediate (Credit deal)|
 |currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
@@ -4113,11 +3370,11 @@ Create the charge based on credit card or previously stored credit card token
 |cardOwnerNationalID|string¦null|false|none|Only to be used for pin pad transactions when CreditCardSecureDetails is not available|
 |cardOwnerName|string¦null|false|none|Only to be used for pin pad transactions when CreditCardSecureDetails is not available|
 |connectionID|string¦null|false|none|SignalR connection id|
-|extension|object¦null|false|none|none|
-|» **additionalProperties**|[JToken](#schemajtoken)|false|none|none|
+|extension|any|false|none|none|
 |threeDSServerTransID|string¦null|false|none|none|
 |origin|string¦null|false|none|none|
 |userAmount|boolean|false|none|none|
+|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 
 <h2 id="tocS_CreditCardDetails">CreditCardDetails</h2>
 <!-- backwards compatibility -->
@@ -4168,6 +3425,8 @@ Does not store full card number. Used 123456****1234 pattern
 
 ```json
 {
+  "cvv": "stri",
+  "authNum": "string",
   "cardNumber": "stringstr",
   "cardExpiration": {
     "year": 20,
@@ -4179,9 +3438,7 @@ Does not store full card number. Used 123456****1234 pattern
   "solek": "string",
   "cardOwnerName": "string",
   "cardOwnerNationalID": "string",
-  "cardReaderInput": "string",
-  "cvv": "stri",
-  "authNum": "string"
+  "cardReaderInput": "string"
 }
 
 ```
@@ -4190,6 +3447,8 @@ Does not store full card number. Used 123456****1234 pattern
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|cvv|string¦null|false|none|none|
+|authNum|string¦null|false|none|after code 3 or 4 user can insert this value from credit company|
 |cardNumber|string|true|none|none|
 |cardExpiration|[CardExpiration](#schemacardexpiration)|true|none|none|
 |cardVendor|string¦null|false|none|none|
@@ -4198,8 +3457,6 @@ Does not store full card number. Used 123456****1234 pattern
 |cardOwnerName|string¦null|false|none|none|
 |cardOwnerNationalID|string¦null|false|none|none|
 |cardReaderInput|string¦null|false|none|none|
-|cvv|string¦null|false|none|none|
-|authNum|string¦null|false|none|after code 3 or 4 user can insert this value from credit company|
 
 <h2 id="tocS_CreditCardTokenSummary">CreditCardTokenSummary</h2>
 <!-- backwards compatibility -->
@@ -4263,20 +3520,6 @@ USD
 
 EUR
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|ILS<br><br>USD<br><br>EUR|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|ILS|
-|*anonymous*|USD|
-|*anonymous*|EUR|
-
 <h2 id="tocS_DealDetails">DealDetails</h2>
 <!-- backwards compatibility -->
 <a id="schemadealdetails"></a>
@@ -4308,14 +3551,7 @@ EUR
       "netAmount": 0,
       "discount": 0,
       "netDiscount": 0,
-      "extension": {
-        "property1": [
-          []
-        ],
-        "property2": [
-          []
-        ]
-      },
+      "extension": null,
       "woocommerceID": "string",
       "ecwidID": "string"
     }
@@ -4390,24 +3626,6 @@ paymentRequest (Document created by consumer using Checkout Page with a payment 
 
 bit (Document created by consumer using Bit)
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|Document origin (primarely payment transaction origin)<br><br>UI (Document created manually by merchant user using Merchant's UI)<br><br>API (Document created via API)<br><br>checkout (Document created by consumer using Checkout Page)<br><br>billing (Document generated based on billing schedule)<br><br>device (Transaction created using pinpad device (or other device))<br><br>paymentRequest (Document created by consumer using Checkout Page with a payment link)<br><br>bit (Document created by consumer using Bit)|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|UI|
-|*anonymous*|API|
-|*anonymous*|checkout|
-|*anonymous*|billing|
-|*anonymous*|device|
-|*anonymous*|paymentRequest|
-|*anonymous*|bit|
-
 <h2 id="tocS_EndAtTypeEnum">EndAtTypeEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemaendattypeenum"></a>
@@ -4425,20 +3643,6 @@ never
 specifiedDate
 
 afterNumberOfPayments
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|never<br><br>specifiedDate<br><br>afterNumberOfPayments|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|never|
-|*anonymous*|specifiedDate|
-|*anonymous*|afterNumberOfPayments|
 
 <h2 id="tocS_Error">Error</h2>
 <!-- backwards compatibility -->
@@ -4572,22 +3776,6 @@ paymentInfo
 
 refundInvoice
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|invoice<br><br>invoiceWithPaymentInfo<br><br>creditNote<br><br>paymentInfo<br><br>refundInvoice|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|invoice|
-|*anonymous*|invoiceWithPaymentInfo|
-|*anonymous*|creditNote|
-|*anonymous*|paymentInfo|
-|*anonymous*|refundInvoice|
-
 <h2 id="tocS_Item">Item</h2>
 <!-- backwards compatibility -->
 <a id="schemaitem"></a>
@@ -4610,14 +3798,7 @@ refundInvoice
   "netAmount": 0,
   "discount": 0,
   "netDiscount": 0,
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "woocommerceID": "string",
   "ecwidID": "string"
 }
@@ -4641,8 +3822,7 @@ refundInvoice
 |netAmount|number(currency)¦null|false|none|Net amount (before VAT)|
 |discount|number(currency)¦null|false|none|Discount|
 |netDiscount|number(currency)¦null|false|none|Discount|
-|extension|object¦null|false|none|none|
-|» **additionalProperties**|[JToken](#schemajtoken)|false|none|none|
+|extension|any|false|none|none|
 |woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
 |ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
@@ -4665,42 +3845,6 @@ J4 (Regular deal)
 J2 (Check)
 
 J5 (Block card)
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|Type of Deal. optional values are; J2 for Check,J4 for Charge, J5 for Block card<br><br>J4 (Regular deal)<br><br>J2 (Check)<br><br>J5 (Block card)|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|J4|
-|*anonymous*|J2|
-|*anonymous*|J5|
-
-<h2 id="tocS_JToken">JToken</h2>
-<!-- backwards compatibility -->
-<a id="schemajtoken"></a>
-<a id="schema_JToken"></a>
-<a id="tocSjtoken"></a>
-<a id="tocsjtoken"></a>
-
-```json
-[
-  [
-    []
-  ]
-]
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[JToken](#schemajtoken)]|false|none|none|
 
 <h2 id="tocS_OperationResponse">OperationResponse</h2>
 <!-- backwards compatibility -->
@@ -4741,23 +3885,9 @@ J5 (Block card)
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 
 ```
@@ -4776,8 +3906,31 @@ J5 (Block card)
 |errors|[[Error](#schemaerror)]¦null|false|none|none|
 |concurrencyToken|string¦null|false|none|none|
 |innerResponse|[OperationResponse](#schemaoperationresponse)|false|none|none|
-|additionalData|object¦null|false|none|none|
-|» **additionalProperties**|[JToken](#schemajtoken)|false|none|none|
+|additionalData|any|false|none|none|
+
+<h2 id="tocS_PayReqQuickStatusFilterTypeEnum">PayReqQuickStatusFilterTypeEnum</h2>
+<!-- backwards compatibility -->
+<a id="schemapayreqquickstatusfiltertypeenum"></a>
+<a id="schema_PayReqQuickStatusFilterTypeEnum"></a>
+<a id="tocSpayreqquickstatusfiltertypeenum"></a>
+<a id="tocspayreqquickstatusfiltertypeenum"></a>
+
+```json
+"pending"
+
+```
+
+pending
+
+completed
+
+failed
+
+canceled
+
+overdue
+
+viewed
 
 <h2 id="tocS_PaymentDetails">PaymentDetails</h2>
 <!-- backwards compatibility -->
@@ -4834,14 +3987,7 @@ J5 (Block card)
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -4897,14 +4043,7 @@ J5 (Block card)
   "redirectUrl": "string",
   "userAmount": true,
   "cardOwnerNationalID": "string",
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "language": "string",
   "origin": "string",
   "allowInstallments": true,
@@ -4946,8 +4085,7 @@ Create a link to Checkout Page
 |redirectUrl|string¦null|false|none|Url to merchant's web site. Base url should be configured in terminal settings. You can add any details to query string.|
 |userAmount|boolean|false|none|Consumer can override PaymentRequestAmount|
 |cardOwnerNationalID|string¦null|false|none|none|
-|extension|object¦null|false|none|Any advanced payload which will be stored in EasyCard and then can be obtained using "GetTransaction"|
-|» **additionalProperties**|[JToken](#schemajtoken)|false|none|none|
+|extension|any|false|none|Any advanced payload which will be stored in EasyCard and then can be obtained using "GetTransaction"|
 |language|string¦null|false|none|Default language to display checkout page|
 |origin|string¦null|false|none|none|
 |allowInstallments|boolean¦null|false|none|none|
@@ -5014,25 +4152,6 @@ PaymentRequestPaymentFailed
 
 PaymentRequestPayed
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|PaymentRequestCreated<br><br>PaymentRequestUpdated<br><br>PaymentRequestSent<br><br>PaymentRequestCanceled<br><br>PaymentRequestViewed<br><br>PaymentRequestRejected<br><br>PaymentRequestPaymentFailed<br><br>PaymentRequestPayed|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|PaymentRequestCreated|
-|*anonymous*|PaymentRequestUpdated|
-|*anonymous*|PaymentRequestSent|
-|*anonymous*|PaymentRequestCanceled|
-|*anonymous*|PaymentRequestViewed|
-|*anonymous*|PaymentRequestRejected|
-|*anonymous*|PaymentRequestPaymentFailed|
-|*anonymous*|PaymentRequestPayed|
-
 <h2 id="tocS_PaymentRequestResponse">PaymentRequestResponse</h2>
 <!-- backwards compatibility -->
 <a id="schemapaymentrequestresponse"></a>
@@ -5042,6 +4161,28 @@ PaymentRequestPayed
 
 ```json
 {
+  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+  "terminalName": "string",
+  "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+  "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
+  "paymentRequestUrl": "string",
+  "history": [
+    {
+      "paymentRequestHistoryID": "a27f677d-9bac-4614-b73b-38acec040a90",
+      "operationDate": "2019-08-24T14:15:22Z",
+      "operationDoneBy": "string",
+      "operationCode": "PaymentRequestCreated",
+      "operationMessage": "string"
+    }
+  ],
+  "userPaidDetails": {
+    "vatRate": 0,
+    "vatTotal": 0,
+    "netTotal": 0,
+    "transactionAmount": 0
+  },
+  "amount": 0,
+  "origin": "string",
   "paymentRequestID": "e1c25505-9cc4-4f14-8180-c89257d3d43a",
   "paymentRequestTimestamp": "2019-08-24T14:15:22Z",
   "dueDate": "2019-08-24T14:15:22Z",
@@ -5073,14 +4214,7 @@ PaymentRequestPayed
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -5114,29 +4248,7 @@ PaymentRequestPayed
   "redirectUrl": "string",
   "onlyAddCard": true,
   "showAuthCode": true,
-  "transactionType": "regularDeal",
-  "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-  "terminalName": "string",
-  "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-  "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
-  "paymentRequestUrl": "string",
-  "history": [
-    {
-      "paymentRequestHistoryID": "a27f677d-9bac-4614-b73b-38acec040a90",
-      "operationDate": "2019-08-24T14:15:22Z",
-      "operationDoneBy": "string",
-      "operationCode": "PaymentRequestCreated",
-      "operationMessage": "string"
-    }
-  ],
-  "userPaidDetails": {
-    "vatRate": 0,
-    "vatTotal": 0,
-    "netTotal": 0,
-    "transactionAmount": 0
-  },
-  "amount": 0,
-  "origin": "string"
+  "transactionType": "regularDeal"
 }
 
 ```
@@ -5145,6 +4257,15 @@ PaymentRequestPayed
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|terminalID|string(uuid)¦null|false|none|Terminal|
+|terminalName|string¦null|false|none|EasyCard terminal name|
+|consumerID|string(uuid)¦null|false|none|none|
+|paymentTransactionID|string(uuid)¦null|false|none|none|
+|paymentRequestUrl|string¦null|false|none|none|
+|history|[[PaymentRequestHistorySummary](#schemapaymentrequesthistorysummary)]¦null|false|none|none|
+|userPaidDetails|[PaymentRequestUserPaidDetails](#schemapaymentrequestuserpaiddetails)|false|none|Information regarding what user actually paid in payment request (only relevant for UserAmount allowed PRs)|
+|amount|number(double)|false|none|none|
+|origin|string¦null|false|none|none|
 |paymentRequestID|string(uuid)|false|none|Primary reference|
 |paymentRequestTimestamp|string(date-time)¦null|false|none|Date-time when deal created initially in UTC|
 |dueDate|string(date-time)¦null|false|none|Due date|
@@ -5168,15 +4289,6 @@ PaymentRequestPayed
 |onlyAddCard|boolean|false|read-only|none|
 |showAuthCode|boolean¦null|false|none|none|
 |transactionType|[TransactionTypeEnum](#schematransactiontypeenum)|false|none|Generic transaction type<br><br>regularDeal (Simple deal type)<br><br>installments (Deal to pay by parts)<br><br>credit (Credit deal)<br><br>immediate (Credit deal)|
-|terminalID|string(uuid)¦null|false|none|Terminal|
-|terminalName|string¦null|false|none|EasyCard terminal name|
-|consumerID|string(uuid)¦null|false|none|none|
-|paymentTransactionID|string(uuid)¦null|false|none|none|
-|paymentRequestUrl|string¦null|false|none|none|
-|history|[[PaymentRequestHistorySummary](#schemapaymentrequesthistorysummary)]¦null|false|none|none|
-|userPaidDetails|[PaymentRequestUserPaidDetails](#schemapaymentrequestuserpaiddetails)|false|none|Information regarding what user actually paid in payment request (only relevant for UserAmount allowed PRs)|
-|amount|number(double)|false|none|none|
-|origin|string¦null|false|none|none|
 
 <h2 id="tocS_PaymentRequestStatusEnum">PaymentRequestStatusEnum</h2>
 <!-- backwards compatibility -->
@@ -5207,26 +4319,6 @@ rejected
 canceled
 
 sendingFailed
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|initial<br><br>sending<br><br>sent<br><br>viewed<br><br>payed<br><br>paymentFailed<br><br>rejected<br><br>canceled<br><br>sendingFailed|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|initial|
-|*anonymous*|sending|
-|*anonymous*|sent|
-|*anonymous*|viewed|
-|*anonymous*|payed|
-|*anonymous*|paymentFailed|
-|*anonymous*|rejected|
-|*anonymous*|canceled|
-|*anonymous*|sendingFailed|
 
 <h2 id="tocS_PaymentRequestSummary">PaymentRequestSummary</h2>
 <!-- backwards compatibility -->
@@ -5320,62 +4412,6 @@ cash
 
 bank
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|card|
-|*anonymous*|cheque|
-|*anonymous*|cash|
-|*anonymous*|bank|
-
-<h2 id="tocS_PayReqQuickStatusFilterTypeEnum">PayReqQuickStatusFilterTypeEnum</h2>
-<!-- backwards compatibility -->
-<a id="schemapayreqquickstatusfiltertypeenum"></a>
-<a id="schema_PayReqQuickStatusFilterTypeEnum"></a>
-<a id="tocSpayreqquickstatusfiltertypeenum"></a>
-<a id="tocspayreqquickstatusfiltertypeenum"></a>
-
-```json
-"pending"
-
-```
-
-pending
-
-completed
-
-failed
-
-canceled
-
-overdue
-
-viewed
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|pending<br><br>completed<br><br>failed<br><br>canceled<br><br>overdue<br><br>viewed|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|pending|
-|*anonymous*|completed|
-|*anonymous*|failed|
-|*anonymous*|canceled|
-|*anonymous*|overdue|
-|*anonymous*|viewed|
-
 <h2 id="tocS_PinPadDetails">PinPadDetails</h2>
 <!-- backwards compatibility -->
 <a id="schemapinpaddetails"></a>
@@ -5414,20 +4450,6 @@ Yes
 
 No
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|All<br><br>Yes<br><br>No|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|All|
-|*anonymous*|Yes|
-|*anonymous*|No|
-
 <h2 id="tocS_QuickDateFilterTypeEnum">QuickDateFilterTypeEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemaquickdatefiltertypeenum"></a>
@@ -5456,25 +4478,6 @@ lastMonth
 
 last3Months
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|today<br><br>yesterday<br><br>thisWeek<br><br>lastWeek<br><br>last30Days<br><br>thisMonth<br><br>lastMonth<br><br>last3Months|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|today|
-|*anonymous*|yesterday|
-|*anonymous*|thisWeek|
-|*anonymous*|lastWeek|
-|*anonymous*|last30Days|
-|*anonymous*|thisMonth|
-|*anonymous*|lastMonth|
-|*anonymous*|last3Months|
-
 <h2 id="tocS_QuickStatusFilterTypeEnum">QuickStatusFilterTypeEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemaquickstatusfiltertypeenum"></a>
@@ -5499,23 +4502,6 @@ AwaitingForTransmission
 
 Chargeback
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|Pending<br><br>Completed<br><br>Failed<br><br>Canceled<br><br>AwaitingForTransmission<br><br>Chargeback|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|Pending|
-|*anonymous*|Completed|
-|*anonymous*|Failed|
-|*anonymous*|Canceled|
-|*anonymous*|AwaitingForTransmission|
-|*anonymous*|Chargeback|
-
 <h2 id="tocS_RefundRequest">RefundRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemarefundrequest"></a>
@@ -5525,61 +4511,12 @@ Chargeback
 
 ```json
 {
-  "dealDetails": {
-    "dealReference": "string",
-    "dealDescription": "string",
-    "consumerEmail": "user@example.com",
-    "consumerName": "string",
-    "consumerNationalID": "string",
-    "consumerPhone": "string",
-    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-    "items": [
-      {
-        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-        "externalReference": "string",
-        "itemName": "string",
-        "sku": "string",
-        "price": 0,
-        "netPrice": 0,
-        "quantity": 0.01,
-        "amount": 0,
-        "vatRate": 1,
-        "vat": 0,
-        "netAmount": 0,
-        "discount": 0,
-        "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
-        "woocommerceID": "string",
-        "ecwidID": "string"
-      }
-    ],
-    "consumerAddress": {
-      "countryCode": "string",
-      "city": "string",
-      "zip": "string",
-      "street": "string",
-      "house": "string",
-      "apartment": "string"
-    },
-    "consumerExternalReference": "string",
-    "consumerWoocommerceID": "string",
-    "consumerEcwidID": "string",
-    "responsiblePerson": "string",
-    "externalUserID": "string",
-    "branch": "string",
-    "department": "string"
-  },
   "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
   "currency": "ILS",
   "cardPresence": "cardNotPresent",
   "creditCardSecureDetails": {
+    "cvv": "stri",
+    "authNum": "string",
     "cardNumber": "stringstr",
     "cardExpiration": {
       "year": 20,
@@ -5591,9 +4528,7 @@ Chargeback
     "solek": "string",
     "cardOwnerName": "string",
     "cardOwnerNationalID": "string",
-    "cardReaderInput": "string",
-    "cvv": "stri",
-    "authNum": "string"
+    "cardReaderInput": "string"
   },
   "creditCardToken": "string",
   "transactionAmount": 0.01,
@@ -5621,7 +4556,51 @@ Chargeback
   "transactionType": "regularDeal",
   "cardOwnerNationalID": "string",
   "connectionID": "string",
-  "okNumber": "string"
+  "okNumber": "string",
+  "dealDetails": {
+    "dealReference": "string",
+    "dealDescription": "string",
+    "consumerEmail": "user@example.com",
+    "consumerName": "string",
+    "consumerNationalID": "string",
+    "consumerPhone": "string",
+    "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+    "items": [
+      {
+        "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+        "externalReference": "string",
+        "itemName": "string",
+        "sku": "string",
+        "price": 0,
+        "netPrice": 0,
+        "quantity": 0.01,
+        "amount": 0,
+        "vatRate": 1,
+        "vat": 0,
+        "netAmount": 0,
+        "discount": 0,
+        "netDiscount": 0,
+        "extension": null,
+        "woocommerceID": "string",
+        "ecwidID": "string"
+      }
+    ],
+    "consumerAddress": {
+      "countryCode": "string",
+      "city": "string",
+      "zip": "string",
+      "street": "string",
+      "house": "string",
+      "apartment": "string"
+    },
+    "consumerExternalReference": "string",
+    "consumerWoocommerceID": "string",
+    "consumerEcwidID": "string",
+    "responsiblePerson": "string",
+    "externalUserID": "string",
+    "branch": "string",
+    "department": "string"
+  }
 }
 
 ```
@@ -5632,7 +4611,6 @@ Refund request
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 |terminalID|string(uuid)|true|none|EasyCard terminal reference|
 |currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
 |cardPresence|[CardPresenceEnum](#schemacardpresenceenum)|false|none|Is the card physically scanned<br><br>cardNotPresent<br><br>regular<br><br>Internet|
@@ -5651,6 +4629,7 @@ Refund request
 |cardOwnerNationalID|string¦null|false|none|Only to be used for pin pad transactions when CredotCardSecureDetails is not available|
 |connectionID|string¦null|false|none|SignalR connection id|
 |okNumber|string¦null|false|none|ShvaAuthNum|
+|dealDetails|[DealDetails](#schemadealdetails)|false|none|Additional deal information. All these data are not required and used only for merchant's business purposes.|
 
 <h2 id="tocS_RejectionReasonEnum">RejectionReasonEnum</h2>
 <!-- backwards compatibility -->
@@ -5684,27 +4663,6 @@ cardOwnerNationalIdRequired
 
 authCodeRequired
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|unknown<br><br>creditCardIsMerchantsCard<br><br>nationalIdIsMerchantsId<br><br>singleTransactionAmountExceeded<br><br>dailyAmountExceeded<br><br>creditCardDailyUsageExceeded<br><br>refundNotMatchRegularAmount<br><br>refundExceededCollateral<br><br>cardOwnerNationalIdRequired<br><br>authCodeRequired|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|unknown|
-|*anonymous*|creditCardIsMerchantsCard|
-|*anonymous*|nationalIdIsMerchantsId|
-|*anonymous*|singleTransactionAmountExceeded|
-|*anonymous*|dailyAmountExceeded|
-|*anonymous*|creditCardDailyUsageExceeded|
-|*anonymous*|refundNotMatchRegularAmount|
-|*anonymous*|refundExceededCollateral|
-|*anonymous*|cardOwnerNationalIdRequired|
-|*anonymous*|authCodeRequired|
-
 <h2 id="tocS_RepeatPeriodTypeEnum">RepeatPeriodTypeEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemarepeatperiodtypeenum"></a>
@@ -5729,23 +4687,6 @@ halfYear
 
 year
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|oneTime<br><br>monthly<br><br>biMonthly<br><br>quarter<br><br>halfYear<br><br>year|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|oneTime|
-|*anonymous*|monthly|
-|*anonymous*|biMonthly|
-|*anonymous*|quarter|
-|*anonymous*|halfYear|
-|*anonymous*|year|
-
 <h2 id="tocS_ShowDeletedEnum">ShowDeletedEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemashowdeletedenum"></a>
@@ -5763,20 +4704,6 @@ OnlyActive
 OnlyDeleted
 
 All
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|OnlyActive<br><br>OnlyDeleted<br><br>All|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|OnlyActive|
-|*anonymous*|OnlyDeleted|
-|*anonymous*|All|
 
 <h2 id="tocS_SolekEnum">SolekEnum</h2>
 <!-- backwards compatibility -->
@@ -5810,27 +4737,6 @@ OTHER
 
 MASTERCARD
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|UNKNOWN<br><br>ISRACARD<br><br>VISA<br><br>DINERS_CLUB<br><br>AMEX<br><br>JCB<br><br>DISCOVER<br><br>LEUMI_CARD<br><br>OTHER<br><br>MASTERCARD|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|UNKNOWN|
-|*anonymous*|ISRACARD|
-|*anonymous*|VISA|
-|*anonymous*|DINERS_CLUB|
-|*anonymous*|AMEX|
-|*anonymous*|JCB|
-|*anonymous*|DISCOVER|
-|*anonymous*|LEUMI_CARD|
-|*anonymous*|OTHER|
-|*anonymous*|MASTERCARD|
-
 <h2 id="tocS_SpecialTransactionTypeEnum">SpecialTransactionTypeEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemaspecialtransactiontypeenum"></a>
@@ -5849,20 +4755,6 @@ initialDeal
 
 refund
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|regularDeal<br><br>initialDeal<br><br>refund|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|regularDeal|
-|*anonymous*|initialDeal|
-|*anonymous*|refund|
-
 <h2 id="tocS_StartAtTypeEnum">StartAtTypeEnum</h2>
 <!-- backwards compatibility -->
 <a id="schemastartattypeenum"></a>
@@ -5878,19 +4770,6 @@ refund
 today
 
 specifiedDate
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|today<br><br>specifiedDate|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|today|
-|*anonymous*|specifiedDate|
 
 <h2 id="tocS_StatusEnum">StatusEnum</h2>
 <!-- backwards compatibility -->
@@ -5910,29 +4789,18 @@ warning
 
 error
 
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|success<br><br>warning<br><br>error|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|success|
-|*anonymous*|warning|
-|*anonymous*|error|
-
-<h2 id="tocS_SummariesAmountResponse`1_BillingDealSummary">SummariesAmountResponse`1_BillingDealSummary</h2>
+<h2 id="tocS_SummariesAmountResponse_BillingDealSummary">SummariesAmountResponse_BillingDealSummary</h2>
 <!-- backwards compatibility -->
-<a id="schemasummariesamountresponse`1_billingdealsummary"></a>
-<a id="schema_SummariesAmountResponse`1_BillingDealSummary"></a>
-<a id="tocSsummariesamountresponse`1_billingdealsummary"></a>
-<a id="tocssummariesamountresponse`1_billingdealsummary"></a>
+<a id="schemasummariesamountresponse_billingdealsummary"></a>
+<a id="schema_SummariesAmountResponse_BillingDealSummary"></a>
+<a id="tocSsummariesamountresponse_billingdealsummary"></a>
+<a id="tocssummariesamountresponse_billingdealsummary"></a>
 
 ```json
 {
+  "totalAmountILS": 0,
+  "totalAmountUSD": 0,
+  "totalAmountEUR": 0,
   "numberOfRecords": 0,
   "data": [
     {
@@ -5985,14 +4853,7 @@ error
             "netAmount": 0,
             "discount": 0,
             "netDiscount": 0,
-            "extension": {
-              "property1": [
-                []
-              ],
-              "property2": [
-                []
-              ]
-            },
+            "extension": null,
             "woocommerceID": "string",
             "ecwidID": "string"
           }
@@ -6017,10 +4878,7 @@ error
       "creditCardToken": "8000dee3-fd2b-4f6f-9c2f-678fb99e8ae4",
       "consumerExternalReference": "string"
     }
-  ],
-  "totalAmountILS": 0,
-  "totalAmountUSD": 0,
-  "totalAmountEUR": 0
+  ]
 }
 
 ```
@@ -6029,21 +4887,24 @@ error
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|numberOfRecords|integer(int32)|false|none|none|
-|data|[[BillingDealSummary](#schemabillingdealsummary)]¦null|false|none|none|
 |totalAmountILS|number(double)¦null|false|none|none|
 |totalAmountUSD|number(double)¦null|false|none|none|
 |totalAmountEUR|number(double)¦null|false|none|none|
+|numberOfRecords|integer(int32)|false|none|none|
+|data|[[BillingDealSummary](#schemabillingdealsummary)]¦null|false|none|none|
 
-<h2 id="tocS_SummariesAmountResponse`1_PaymentRequestSummary">SummariesAmountResponse`1_PaymentRequestSummary</h2>
+<h2 id="tocS_SummariesAmountResponse_PaymentRequestSummary">SummariesAmountResponse_PaymentRequestSummary</h2>
 <!-- backwards compatibility -->
-<a id="schemasummariesamountresponse`1_paymentrequestsummary"></a>
-<a id="schema_SummariesAmountResponse`1_PaymentRequestSummary"></a>
-<a id="tocSsummariesamountresponse`1_paymentrequestsummary"></a>
-<a id="tocssummariesamountresponse`1_paymentrequestsummary"></a>
+<a id="schemasummariesamountresponse_paymentrequestsummary"></a>
+<a id="schema_SummariesAmountResponse_PaymentRequestSummary"></a>
+<a id="tocSsummariesamountresponse_paymentrequestsummary"></a>
+<a id="tocssummariesamountresponse_paymentrequestsummary"></a>
 
 ```json
 {
+  "totalAmountILS": 0,
+  "totalAmountUSD": 0,
+  "totalAmountEUR": 0,
   "numberOfRecords": 0,
   "data": [
     {
@@ -6061,10 +4922,7 @@ error
       "paymentTransactionID": "19fb5b03-41a8-4687-a896-97851484218b",
       "isRefund": true
     }
-  ],
-  "totalAmountILS": 0,
-  "totalAmountUSD": 0,
-  "totalAmountEUR": 0
+  ]
 }
 
 ```
@@ -6073,21 +4931,24 @@ error
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|numberOfRecords|integer(int32)|false|none|none|
-|data|[[PaymentRequestSummary](#schemapaymentrequestsummary)]¦null|false|none|none|
 |totalAmountILS|number(double)¦null|false|none|none|
 |totalAmountUSD|number(double)¦null|false|none|none|
 |totalAmountEUR|number(double)¦null|false|none|none|
+|numberOfRecords|integer(int32)|false|none|none|
+|data|[[PaymentRequestSummary](#schemapaymentrequestsummary)]¦null|false|none|none|
 
-<h2 id="tocS_SummariesAmountResponse`1_TransactionSummary">SummariesAmountResponse`1_TransactionSummary</h2>
+<h2 id="tocS_SummariesAmountResponse_TransactionSummary">SummariesAmountResponse_TransactionSummary</h2>
 <!-- backwards compatibility -->
-<a id="schemasummariesamountresponse`1_transactionsummary"></a>
-<a id="schema_SummariesAmountResponse`1_TransactionSummary"></a>
-<a id="tocSsummariesamountresponse`1_transactionsummary"></a>
-<a id="tocssummariesamountresponse`1_transactionsummary"></a>
+<a id="schemasummariesamountresponse_transactionsummary"></a>
+<a id="schema_SummariesAmountResponse_TransactionSummary"></a>
+<a id="tocSsummariesamountresponse_transactionsummary"></a>
+<a id="tocssummariesamountresponse_transactionsummary"></a>
 
 ```json
 {
+  "totalAmountILS": 0,
+  "totalAmountUSD": 0,
+  "totalAmountEUR": 0,
   "numberOfRecords": 0,
   "data": [
     {
@@ -6117,10 +4978,7 @@ error
       "invoiceID": "4f03a727-9c4b-43a5-b699-271a3e6fdc9c",
       "dealDescription": "string"
     }
-  ],
-  "totalAmountILS": 0,
-  "totalAmountUSD": 0,
-  "totalAmountEUR": 0
+  ]
 }
 
 ```
@@ -6129,18 +4987,18 @@ error
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|numberOfRecords|integer(int32)|false|none|none|
-|data|[[TransactionSummary](#schematransactionsummary)]¦null|false|none|none|
 |totalAmountILS|number(double)¦null|false|none|none|
 |totalAmountUSD|number(double)¦null|false|none|none|
 |totalAmountEUR|number(double)¦null|false|none|none|
+|numberOfRecords|integer(int32)|false|none|none|
+|data|[[TransactionSummary](#schematransactionsummary)]¦null|false|none|none|
 
-<h2 id="tocS_SummariesResponse`1_CreditCardTokenSummary">SummariesResponse`1_CreditCardTokenSummary</h2>
+<h2 id="tocS_SummariesResponse_CreditCardTokenSummary">SummariesResponse_CreditCardTokenSummary</h2>
 <!-- backwards compatibility -->
-<a id="schemasummariesresponse`1_creditcardtokensummary"></a>
-<a id="schema_SummariesResponse`1_CreditCardTokenSummary"></a>
-<a id="tocSsummariesresponse`1_creditcardtokensummary"></a>
-<a id="tocssummariesresponse`1_creditcardtokensummary"></a>
+<a id="schemasummariesresponse_creditcardtokensummary"></a>
+<a id="schema_SummariesResponse_CreditCardTokenSummary"></a>
+<a id="tocSsummariesresponse_creditcardtokensummary"></a>
+<a id="tocssummariesresponse_creditcardtokensummary"></a>
 
 ```json
 {
@@ -6175,12 +5033,12 @@ error
 |numberOfRecords|integer(int32)|false|none|none|
 |data|[[CreditCardTokenSummary](#schemacreditcardtokensummary)]¦null|false|none|none|
 
-<h2 id="tocS_SummariesResponse`1_ExecutedWebhookSummary">SummariesResponse`1_ExecutedWebhookSummary</h2>
+<h2 id="tocS_SummariesResponse_ExecutedWebhookSummary">SummariesResponse_ExecutedWebhookSummary</h2>
 <!-- backwards compatibility -->
-<a id="schemasummariesresponse`1_executedwebhooksummary"></a>
-<a id="schema_SummariesResponse`1_ExecutedWebhookSummary"></a>
-<a id="tocSsummariesresponse`1_executedwebhooksummary"></a>
-<a id="tocssummariesresponse`1_executedwebhooksummary"></a>
+<a id="schemasummariesresponse_executedwebhooksummary"></a>
+<a id="schema_SummariesResponse_ExecutedWebhookSummary"></a>
+<a id="tocSsummariesresponse_executedwebhooksummary"></a>
+<a id="tocssummariesresponse_executedwebhooksummary"></a>
 
 ```json
 {
@@ -6223,20 +5081,6 @@ initial
 failedToCancelByAggregator
 
 canceledByAggregator
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|initial<br><br>failedToCancelByAggregator<br><br>canceledByAggregator|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|initial|
-|*anonymous*|failedToCancelByAggregator|
-|*anonymous*|canceledByAggregator|
 
 <h2 id="tocS_TransactionResponse">TransactionResponse</h2>
 <!-- backwards compatibility -->
@@ -6287,13 +5131,13 @@ canceledByAggregator
     "cardReaderInput": "string"
   },
   "bankTransferDetails": {
-    "paymentType": "card",
-    "amount": 0,
+    "dueDate": "2019-08-24T14:15:22Z",
+    "reference": "string",
     "bank": 0,
     "bankBranch": 0,
     "bankAccount": "string",
-    "dueDate": "2019-08-24T14:15:22Z",
-    "reference": "string"
+    "paymentType": "card",
+    "amount": 0
   },
   "creditCardToken": "string",
   "dealDetails": {
@@ -6319,14 +5163,7 @@ canceledByAggregator
         "netAmount": 0,
         "discount": 0,
         "netDiscount": 0,
-        "extension": {
-          "property1": [
-            []
-          ],
-          "property2": [
-            []
-          ]
-        },
+        "extension": null,
         "woocommerceID": "string",
         "ecwidID": "string"
       }
@@ -6365,14 +5202,7 @@ canceledByAggregator
   "documentOrigin": "UI",
   "paymentRequestID": "e1c25505-9cc4-4f14-8180-c89257d3d43a",
   "processorResultCode": 0,
-  "extension": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  },
+  "extension": null,
   "bitTransactionDetails": null,
   "totalRefund": 0,
   "origin": "string",
@@ -6439,8 +5269,7 @@ Payment transaction details
 |documentOrigin|[DocumentOriginEnum](#schemadocumentoriginenum)|false|none|Document origin (primarely payment transaction origin)<br><br>UI (Document created manually by merchant user using Merchant's UI)<br><br>API (Document created via API)<br><br>checkout (Document created by consumer using Checkout Page)<br><br>billing (Document generated based on billing schedule)<br><br>device (Transaction created using pinpad device (or other device))<br><br>paymentRequest (Document created by consumer using Checkout Page with a payment link)<br><br>bit (Document created by consumer using Bit)|
 |paymentRequestID|string(uuid)¦null|false|none|Reference to initial payment link creation request|
 |processorResultCode|integer(int32)¦null|false|none|none|
-|extension|object¦null|false|none|Any advanced payload which will be stored in EasyCard and then can be obtained using "GetTransaction"|
-|» **additionalProperties**|[JToken](#schemajtoken)|false|none|none|
+|extension|any|false|none|Any advanced payload which will be stored in EasyCard and then can be obtained using "GetTransaction"|
 |bitTransactionDetails|any|false|none|none|
 |totalRefund|number(double)¦null|false|none|none|
 |origin|string¦null|false|none|Origin site url or label|
@@ -6500,36 +5329,6 @@ rejectedByProcessor
 rejectedByAggregator
 
 rejectedBy3Dsecure
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|initial<br><br>confirmedByAggregator<br><br>confirmedByPinpadPreProcessor<br><br>confirmedByProcessor<br><br>awaitingForTransmission<br><br>transmissionInProgress<br><br>transmissionCancelingInProgress<br><br>completed<br><br>awaitingToSelectJ5<br><br>chargeback<br><br>chargebackFailed<br><br>transmissionToProcessorFailed<br><br>failedToCommitByAggregator<br><br>failedToConfirmByProcesor<br><br>failedToConfirmByAggregator<br><br>cancelledByMerchant<br><br>rejectedByProcessor<br><br>rejectedByAggregator<br><br>rejectedBy3Dsecure|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|initial|
-|*anonymous*|confirmedByAggregator|
-|*anonymous*|confirmedByPinpadPreProcessor|
-|*anonymous*|confirmedByProcessor|
-|*anonymous*|awaitingForTransmission|
-|*anonymous*|transmissionInProgress|
-|*anonymous*|transmissionCancelingInProgress|
-|*anonymous*|completed|
-|*anonymous*|awaitingToSelectJ5|
-|*anonymous*|chargeback|
-|*anonymous*|chargebackFailed|
-|*anonymous*|transmissionToProcessorFailed|
-|*anonymous*|failedToCommitByAggregator|
-|*anonymous*|failedToConfirmByProcesor|
-|*anonymous*|failedToConfirmByAggregator|
-|*anonymous*|cancelledByMerchant|
-|*anonymous*|rejectedByProcessor|
-|*anonymous*|rejectedByAggregator|
-|*anonymous*|rejectedBy3Dsecure|
 
 <h2 id="tocS_TransactionSummary">TransactionSummary</h2>
 <!-- backwards compatibility -->
@@ -6620,19 +5419,4 @@ installments (Deal to pay by parts)
 credit (Credit deal)
 
 immediate (Credit deal)
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|Generic transaction type<br><br>regularDeal (Simple deal type)<br><br>installments (Deal to pay by parts)<br><br>credit (Credit deal)<br><br>immediate (Credit deal)|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|regularDeal|
-|*anonymous*|installments|
-|*anonymous*|credit|
-|*anonymous*|immediate|
 

@@ -13,6 +13,12 @@ Sections
 
 - [Authentication](Readme.md#authentication)
 
+- [Billing Deals (Recurring Payments) - general behavior](#billing-deals-recurring-payments---general-behavior)
+
+- [How to use `Consumer` and saved `Card Token`](#how-to-use-consumer-and-saved-card-token)
+
+
+
 
 <br/><br/>
 
@@ -48,16 +54,13 @@ Please see [Examples](Readme.md#examples)
 
 Billing Deals (Recurring Payments) - general behavior
 -------------------------------
+> In general whole process is very similar to [Checkout Page - Only Save Consumer's Card](CheckoutPage.md#checkout-page---only-save-card) but at the end you need to send API call to create `Billing Deal` itself.
 
-You can create Recurring Payments (`Billing Deals`) using [Transactions API](TransactionsApi.md), but - the main point is that to have ability to withdraw money from consumer's credit card, this card should be saved in EasyCard system - _`Checkout Page` should be used to collect this data_ (will be filled by buyer). So - it is not enough just to use API!
+You can create Recurring Payments (`Billing Deals`) using [Transactions API](TransactionsApi.md#create-billing-deal), but - the main point is that to have ability to withdraw money from consumer's credit card, this card should be saved in EasyCard system first.  _`Checkout Page` should be used to collect card data_ (card details will be filled by buyer). When creating `Payment Intent` using API, please specify `UserAmount = false` and `paymentRequestAmount = 0`. Please note that in this case _EasyCard `TransactionID` will not be added to redirect url but `TokenID` will be added_. This `TokenID` is an ID of saved consumer's card inside EasyCard system.
 
-Next point is that saved credit cards always attached to `Consumer` record, so to be able to create `Billing Deal` you need to create `Consumer` record first. 
+Next point is that saved credit cards (and `Billing Deal` itself) is always attached to the `Consumer` record, so to be able to create `Billing Deal` you need to create `Consumer` record first (or use previously created one). 
 
-```
-In general whole process is very similar to [regular checkout using Consumer](CheckoutPage.md#checkout-page---create-consumer-flow) but at the end you need to send API call to create `Billing Deal` itself.
-```
-
-Please note, that you can just ask customer to save his card and then create `Billing Deal` at any point of time as you need. Several cards tokens can be added.
+> Please note, that you can ask customer to save his card and then create `Billing Deal` at any point of time _later_ as you need - so card saving is not required step of Billing Deal process if the card already saved. Several cards tokens can be added to the same `Consumer` record.
 
 ![Billing Deal - general flow](images/BillingSequenceDiagram.svg) 
 
@@ -69,8 +72,10 @@ As it is described above, `Consumer` record is required if you want to create Bi
 
 So, there are next possible situations:
 
-* Consumer record is not exist in EasyCard system yet - so you can create it and then use `ConsumerID` from EasyCard
+* Consumer record is not exist in EasyCard system yet - so you can create it and then use `ConsumerID` from EasyCard (this case is described in previous section)
 
-* If Consumer already added to EasyCard system, you can use one of the saved `Card Tokens` or
+* If Consumer already added to EasyCard system, you can use one of the saved `Card Tokens` (you do not need to use `Checkout Page` in this case)
 
-* add new `Card Token`
+![Billing Deal - use previously saved token](images\BillingWithExitingCustomerSequenceDiagram.svg) 
+
+* The last case when you need to add new `Card Token` to previously created `Consumer` record. It can happens in next cases - no cards was saved previously, consumer do not want to use one of the previously saved cards but want to add new one, all previously saved cards are expired or removed by administrator ot customer.

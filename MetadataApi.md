@@ -1,18 +1,47 @@
-EasyCard Next Generation API v1 - _Metadata API_
-=================================================================
+<!-- Generator: Widdershins v4.0.1 -->
 
-# Authentication
+<h1 id="easycard-metadata-api">EasyCard Metadata API v1</h1>
 
-* API Key (oauth2)
-    - Parameter Name: **Authorization**, in: header. Standard Authorization header using the Bearer scheme. Example: "bearer {token}"
+-----------------------------------------------------------------
+> Please refer to Full API description if you need most recent development version
 
-<h1 id="merchantprofile-api-consumersapi">ConsumersApi</h1>
+Metadata API development version [https://ecng-profile.azurewebsites.net/api-docs/index.html](https://ecng-profile.azurewebsites.net/api-docs/index.html)
 
-## End-customers list (Auth policies: terminal_or_merchant_frontend)
+Live version [https://merchant.e-c.co.il/api-docs/index.html](https://merchant.e-c.co.il/api-docs/index.html)
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+> Scroll down for example requests and responses.
+
+- [Authentication](Readme.md#authentication)
+- [Environments](Readme.md#environments)
+- [Examples](Readme.md#examples)
+- [ConsumersApi](#consumersapi)
+  - [Get Consumers list](#get-consumers-list)
+  - [Create Consumer record](#create-consumer-record)
+  - [Get Consumer details](#get-consumer-details)
+  - [Update Consumer details](#update-consumer-details)
+  - [Delete end-customer record and all related data like card tokens, billings, etc.](#delete-end-customer-record-and-all-related-data-like-card-tokens-billings-etc)
+  - [Restore (un-delete) customer](#restore-un-delete-customer)
+  - [Delete Consumer record](#delete-consumer-record)
+- [ItemsApi](#itemsapi)
+  - [Get custom selling Items](#get-custom-selling-items)
+  - [Create new custom Item](#create-new-custom-item)
+  - [Get Item by ID](#get-item-by-id)
+  - [Update Item](#update-item)
+  - [Delete Item](#delete-item)
+  - [Delete sevaral items](#delete-sevaral-items)
+- [Schemas](#schemas)
+
+
+# ConsumersApi
+
+## Get Consumers list
 
 `GET /api/consumers`
 
-<h3 id="end-customers-list-(auth-policies:-terminal_or_merchant_frontend)-parameters">Parameters</h3>
+<h3 id="get-consumers-list-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -25,19 +54,13 @@ EasyCard Next Generation API v1 - _Metadata API_
 |ExternalReference|query|string|false|none|
 |BillingDesktopRefNumber|query|string|false|none|
 |Origin|query|string|false|none|
+|WoocommerceID|query|string|false|External ID inside https://woocommerce.com system|
+|EcwidID|query|string|false|External ID inside https://www.ecwid.com system|
 |Take|query|integer(int32)|false|none|
 |Skip|query|integer(int32)|false|none|
 |SortBy|query|string|false|none|
 |SortDesc|query|boolean|false|none|
 |ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|ShowDeleted|OnlyActive|
-|ShowDeleted|OnlyDeleted|
-|ShowDeleted|All|
 
 > Example responses
 
@@ -62,26 +85,31 @@ EasyCard Next Generation API v1 - _Metadata API_
         "house": "string",
         "apartment": "string"
       },
-      "externalReference": "string"
+      "externalReference": "string",
+      "woocommerceID": "string",
+      "ecwidID": "string",
+      "active": true,
+      "hasBankAccount": true,
+      "hasCreditCard": true
     }
   ]
 }
 ```
 
-<h3 id="end-customers-list-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="get-consumers-list-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[ConsumerSummarySummariesResponse](#schemaconsumersummarysummariesresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesResponse_ConsumerSummary](#schemasummariesresponse_consumersummary)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
-## Create end-customer record (Auth policies: terminal_or_merchant_frontend)
+## Create Consumer record
 
 `POST /api/consumers`
 
@@ -109,19 +137,22 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
   "consumerSecondPhone": "string",
   "consumerNote": "string",
   "bankDetails": {
-    "paymentType": "card",
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
-  }
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 ```
 
-<h3 id="create-end-customer-record-(auth-policies:-terminal_or_merchant_frontend)-parameters">Parameters</h3>
+<h3 id="create-consumer-record-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[ConsumerRequest](#schemaconsumerrequest)|false|none|
+|body|body|[ConsumerRequest](#schemaconsumerrequest)|false|New Consumer details|
 
 > Example responses
 
@@ -159,48 +190,34 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 ```
 
-<h3 id="create-end-customer-record-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="create-consumer-record-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|[OperationResponse](#schemaoperationresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
-## End-customer details (Auth policies: terminal_or_merchant_frontend)
+## Get Consumer details
 
 `GET /api/consumers/{consumerID}`
 
-<h3 id="end-customer-details-(auth-policies:-terminal_or_merchant_frontend)-parameters">Parameters</h3>
+<h3 id="get-consumer-details-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|consumerID|path|string(uuid)|true|none|
+|consumerID|path|string(uuid)|true|Consumer ID|
 
 > Example responses
 
@@ -233,15 +250,18 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
   "consumerSecondPhone": "string",
   "consumerNote": "string",
   "bankDetails": {
-    "paymentType": "card",
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
-  }
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 ```
 
-<h3 id="end-customer-details-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="get-consumer-details-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -251,10 +271,10 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
-## Update end-customer details (Auth policies: terminal_or_merchant_frontend)
+## Update Consumer details
 
 `PUT /api/consumers/{consumerID}`
 
@@ -282,20 +302,23 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
   "billingDesktopRefNumber": "string",
   "active": true,
   "bankDetails": {
-    "paymentType": "card",
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
-  }
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 ```
 
-<h3 id="update-end-customer-details-(auth-policies:-terminal_or_merchant_frontend)-parameters">Parameters</h3>
+<h3 id="update-consumer-details-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|consumerID|path|string(uuid)|true|none|
-|body|body|[UpdateConsumerRequest](#schemaupdateconsumerrequest)|false|none|
+|consumerID|path|string(uuid)|true|Consumer ID|
+|body|body|[UpdateConsumerRequest](#schemaupdateconsumerrequest)|false|Consumer details|
 
 > Example responses
 
@@ -333,27 +356,13 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 ```
 
-<h3 id="update-end-customer-details-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="update-consumer-details-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -363,18 +372,18 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
-## Delete end-customer record (Auth policies: terminal_or_merchant_frontend)
+## Delete end-customer record and all related data like card tokens, billings, etc.
 
 `DELETE /api/consumers/{consumerID}`
 
-<h3 id="delete-end-customer-record-(auth-policies:-terminal_or_merchant_frontend)-parameters">Parameters</h3>
+<h3 id="delete-end-customer-record-and-all-related-data-like-card-tokens,-billings,-etc.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|consumerID|path|string(uuid)|true|none|
+|consumerID|path|string(uuid)|true|Consumer ID|
 
 > Example responses
 
@@ -412,27 +421,13 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 ```
 
-<h3 id="delete-end-customer-record-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="delete-end-customer-record-and-all-related-data-like-card-tokens,-billings,-etc.-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -442,10 +437,75 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
-## Delete customers (Auth policies: terminal_or_merchant_frontend)
+## Restore (un-delete) customer
+
+`PUT /api/consumers/restore/{consumerID}`
+
+<h3 id="restore-(un-delete)-customer-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|consumerID|path|string(uuid)|true|Consumer ID|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "message": "string",
+  "status": "success",
+  "entityID": 0,
+  "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+  "entityReference": "string",
+  "correlationId": "string",
+  "entityType": "string",
+  "errors": [
+    {
+      "code": "string",
+      "description": "string"
+    }
+  ],
+  "concurrencyToken": "string",
+  "innerResponse": {
+    "message": "string",
+    "status": "success",
+    "entityID": 0,
+    "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+    "entityReference": "string",
+    "correlationId": "string",
+    "entityType": "string",
+    "errors": [
+      {
+        "code": "string",
+        "description": "string"
+      }
+    ],
+    "concurrencyToken": "string",
+    "innerResponse": {},
+    "additionalData": null
+  },
+  "additionalData": null
+}
+```
+
+<h3 id="restore-(un-delete)-customer-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[OperationResponse](#schemaoperationresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend )
+</aside>
+
+## Delete Consumer record
 
 `POST /api/consumers/bulkdelete`
 
@@ -457,102 +517,11 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 ]
 ```
 
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "message": "string",
-  "status": "success",
-  "entityID": 0,
-  "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
-  "entityReference": "string",
-  "correlationId": "string",
-  "entityType": "string",
-  "errors": [
-    {
-      "code": "string",
-      "description": "string"
-    }
-  ],
-  "concurrencyToken": "string",
-  "innerResponse": {
-    "message": "string",
-    "status": "success",
-    "entityID": 0,
-    "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
-    "entityReference": "string",
-    "correlationId": "string",
-    "entityType": "string",
-    "errors": [
-      {
-        "code": "string",
-        "description": "string"
-      }
-    ],
-    "concurrencyToken": "string",
-    "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
-  },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
-}
-```
-
-<h3 id="delete-customers-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[OperationResponse](#schemaoperationresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
-</aside>
-
-<h1 id="merchantprofile-api-home">Home</h1>
-
-## get__config
-
-`GET /config`
-
-<h3 id="get__config-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|None|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-<h1 id="merchantprofile-api-itemsapi">ItemsApi</h1>
-
-##  (Auth policies: terminal_or_merchant_frontend)
-
-`DELETE /api/items/{itemID}`
-
-<h3 id="-(auth-policies:-terminal_or_merchant_frontend)-parameters">Parameters</h3>
+<h3 id="delete-consumer-record-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|itemID|path|string(uuid)|true|none|
+|body|body|array[string]|false|IDs of Consumers to delete|
 
 > Example responses
 
@@ -590,27 +559,13 @@ This operation does not require authentication
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 ```
 
-<h3 id="-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="delete-consumer-record-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -620,10 +575,344 @@ This operation does not require authentication
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
-## Delete items (Auth policies: terminal_or_merchant_frontend)
+# ItemsApi
+
+## Get custom selling Items
+
+`GET /api/items`
+
+<h3 id="get-custom-selling-items-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Search|query|string|false|none|
+|Currency|query|[CurrencyEnum](#schemacurrencyenum)|false|none|
+|TerminalID|query|string(uuid)|false|none|
+|ExternalReference|query|string|false|none|
+|BillingDesktopRefNumber|query|string|false|none|
+|Origin|query|string|false|none|
+|WoocommerceID|query|string|false|External ID inside https://woocommerce.com system|
+|EcwidID|query|string|false|External ID inside https://www.ecwid.com system|
+|Take|query|integer(int32)|false|none|
+|Skip|query|integer(int32)|false|none|
+|SortBy|query|string|false|none|
+|SortDesc|query|boolean|false|none|
+|ShowDeleted|query|[ShowDeletedEnum](#schemashowdeletedenum)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "numberOfRecords": 0,
+  "data": [
+    {
+      "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+      "itemName": "string",
+      "price": 0,
+      "currency": "ILS",
+      "externalReference": "string",
+      "billingDesktopRefNumber": "string",
+      "woocommerceID": "string",
+      "ecwidID": "string"
+    }
+  ]
+}
+```
+
+<h3 id="get-custom-selling-items-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[SummariesResponse_ItemSummary](#schemasummariesresponse_itemsummary)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend )
+</aside>
+
+## Create new custom Item
+
+`POST /api/items`
+
+> Body parameter
+
+```json
+{
+  "itemName": "string",
+  "price": 0,
+  "active": true,
+  "currency": "ILS",
+  "externalReference": "string",
+  "billingDesktopRefNumber": "string",
+  "sku": "string",
+  "origin": "string",
+  "woocommerceID": "string",
+  "ecwidID": "string"
+}
+```
+
+<h3 id="create-new-custom-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ItemRequest](#schemaitemrequest)|false|New Item details|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "message": "string",
+  "status": "success",
+  "entityID": 0,
+  "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+  "entityReference": "string",
+  "correlationId": "string",
+  "entityType": "string",
+  "errors": [
+    {
+      "code": "string",
+      "description": "string"
+    }
+  ],
+  "concurrencyToken": "string",
+  "innerResponse": {
+    "message": "string",
+    "status": "success",
+    "entityID": 0,
+    "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+    "entityReference": "string",
+    "correlationId": "string",
+    "entityType": "string",
+    "errors": [
+      {
+        "code": "string",
+        "description": "string"
+      }
+    ],
+    "concurrencyToken": "string",
+    "innerResponse": {},
+    "additionalData": null
+  },
+  "additionalData": null
+}
+```
+
+<h3 id="create-new-custom-item-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[OperationResponse](#schemaoperationresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend )
+</aside>
+
+## Get Item by ID
+
+`GET /api/items/{itemID}`
+
+<h3 id="get-item-by-id-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|itemID|path|string(uuid)|true|Item ID|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+  "updateTimestamp": "string",
+  "itemName": "string",
+  "price": 0,
+  "currency": "ILS",
+  "created": "2019-08-24T14:15:22Z",
+  "operationDoneBy": "string",
+  "correlationId": "string",
+  "externalReference": "string",
+  "billingDesktopRefNumber": "string",
+  "sku": "string",
+  "active": true,
+  "woocommerceID": "string",
+  "ecwidID": "string"
+}
+```
+
+<h3 id="get-item-by-id-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[ItemResponse](#schemaitemresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend )
+</aside>
+
+## Update Item
+
+`PUT /api/items/{itemID}`
+
+> Body parameter
+
+```json
+{
+  "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+  "itemName": "string",
+  "price": 0,
+  "currency": "ILS",
+  "updateTimestamp": "string",
+  "externalReference": "string",
+  "sku": "string",
+  "woocommerceID": "string",
+  "ecwidID": "string"
+}
+```
+
+<h3 id="update-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|itemID|path|string(uuid)|true|Item ID|
+|body|body|[UpdateItemRequest](#schemaupdateitemrequest)|false|Update exusting Item details|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "message": "string",
+  "status": "success",
+  "entityID": 0,
+  "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+  "entityReference": "string",
+  "correlationId": "string",
+  "entityType": "string",
+  "errors": [
+    {
+      "code": "string",
+      "description": "string"
+    }
+  ],
+  "concurrencyToken": "string",
+  "innerResponse": {
+    "message": "string",
+    "status": "success",
+    "entityID": 0,
+    "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+    "entityReference": "string",
+    "correlationId": "string",
+    "entityType": "string",
+    "errors": [
+      {
+        "code": "string",
+        "description": "string"
+      }
+    ],
+    "concurrencyToken": "string",
+    "innerResponse": {},
+    "additionalData": null
+  },
+  "additionalData": null
+}
+```
+
+<h3 id="update-item-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[OperationResponse](#schemaoperationresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend )
+</aside>
+
+## Delete Item
+
+`DELETE /api/items/{itemID}`
+
+<h3 id="delete-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|itemID|path|string(uuid)|true|Item ID|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "message": "string",
+  "status": "success",
+  "entityID": 0,
+  "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+  "entityReference": "string",
+  "correlationId": "string",
+  "entityType": "string",
+  "errors": [
+    {
+      "code": "string",
+      "description": "string"
+    }
+  ],
+  "concurrencyToken": "string",
+  "innerResponse": {
+    "message": "string",
+    "status": "success",
+    "entityID": 0,
+    "entityUID": "1a366e78-0ad8-4c6d-9367-977d46d0652e",
+    "entityReference": "string",
+    "correlationId": "string",
+    "entityType": "string",
+    "errors": [
+      {
+        "code": "string",
+        "description": "string"
+      }
+    ],
+    "concurrencyToken": "string",
+    "innerResponse": {},
+    "additionalData": null
+  },
+  "additionalData": null
+}
+```
+
+<h3 id="delete-item-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success|[OperationResponse](#schemaoperationresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized|None|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None ( Scopes: terminal_or_merchant_frontend )
+</aside>
+
+## Delete sevaral items
 
 `POST /api/items/bulkdelete`
 
@@ -635,6 +924,12 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 ]
 ```
 
+<h3 id="delete-sevaral-items-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|array[string]|false|IDs of Itms to delete|
+
 > Example responses
 
 > 200 Response
@@ -671,27 +966,13 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 ```
 
-<h3 id="delete-items-(auth-policies:-terminal_or_merchant_frontend)-responses">Responses</h3>
+<h3 id="delete-sevaral-items-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -701,7 +982,7 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-oauth2 ( Scopes: terminal_or_merchant_frontend )
+None ( Scopes: terminal_or_merchant_frontend )
 </aside>
 
 # Schemas
@@ -745,17 +1026,24 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
 
 ```json
 {
-  "paymentType": "card",
   "bank": 0,
   "bankBranch": 0,
-  "bankAccount": "string"
+  "bankAccount": "string",
+  "paymentType": "card",
+  "amount": 0
 }
 
 ```
 
 ### Properties
 
-*None*
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|bank|integer(int32)|true|none|none|
+|bankBranch|integer(int32)|true|none|none|
+|bankAccount|string|true|none|none|
+|paymentType|[PaymentTypeEnum](#schemapaymenttypeenum)|false|none|card<br><br>cheque<br><br>cash<br><br>bank|
+|amount|number(double)|false|none|none|
 
 <h2 id="tocS_ConsumerRequest">ConsumerRequest</h2>
 <!-- backwards compatibility -->
@@ -786,11 +1074,14 @@ oauth2 ( Scopes: terminal_or_merchant_frontend )
   "consumerSecondPhone": "string",
   "consumerNote": "string",
   "bankDetails": {
-    "paymentType": "card",
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
-  }
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -806,6 +1097,16 @@ Create consumer
 |consumerPhone|string¦null|false|none|End-customer Phone|
 |consumerNationalID|string¦null|false|none|End-customer National ID|
 |note|string¦null|false|none|End-customer note details|
+|consumerAddress|[Address](#schemaaddress)|false|none|none|
+|externalReference|string¦null|false|none|ID in external system|
+|billingDesktopRefNumber|string¦null|false|none|ID in BillingDesktop system|
+|origin|string¦null|false|none|Origin of customer|
+|active|boolean¦null|false|none|none|
+|consumerSecondPhone|string¦null|false|none|none|
+|consumerNote|string¦null|false|none|none|
+|bankDetails|[BankDetails](#schemabankdetails)|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
 <h2 id="tocS_ConsumerResponse">ConsumerResponse</h2>
 <!-- backwards compatibility -->
@@ -841,11 +1142,14 @@ Create consumer
   "consumerSecondPhone": "string",
   "consumerNote": "string",
   "bankDetails": {
-    "paymentType": "card",
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
-  }
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -861,6 +1165,19 @@ Create consumer
 |consumerEmail|string¦null|false|none|End-customer Email|
 |consumerName|string¦null|false|none|none|
 |consumerPhone|string¦null|false|none|End-customer Phone|
+|consumerAddress|[Address](#schemaaddress)|false|none|none|
+|consumerNationalID|string¦null|false|none|none|
+|created|string(date-time)¦null|false|none|none|
+|operationDoneBy|string¦null|false|none|none|
+|correlationId|string¦null|false|none|none|
+|externalReference|string¦null|false|none|none|
+|origin|string¦null|false|none|none|
+|billingDesktopRefNumber|string¦null|false|none|none|
+|consumerSecondPhone|string¦null|false|none|none|
+|consumerNote|string¦null|false|none|none|
+|bankDetails|[BankDetails](#schemabankdetails)|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
 <h2 id="tocS_ConsumerSummary">ConsumerSummary</h2>
 <!-- backwards compatibility -->
@@ -885,7 +1202,12 @@ Create consumer
     "house": "string",
     "apartment": "string"
   },
-  "externalReference": "string"
+  "externalReference": "string",
+  "woocommerceID": "string",
+  "ecwidID": "string",
+  "active": true,
+  "hasBankAccount": true,
+  "hasCreditCard": true
 }
 
 ```
@@ -900,46 +1222,13 @@ Create consumer
 |consumerName|string¦null|false|none|none|
 |consumerPhone|string¦null|false|none|none|
 |consumerNationalID|string¦null|false|none|none|
-
-<h2 id="tocS_ConsumerSummarySummariesResponse">ConsumerSummarySummariesResponse</h2>
-<!-- backwards compatibility -->
-<a id="schemaconsumersummarysummariesresponse"></a>
-<a id="schema_ConsumerSummarySummariesResponse"></a>
-<a id="tocSconsumersummarysummariesresponse"></a>
-<a id="tocsconsumersummarysummariesresponse"></a>
-
-```json
-{
-  "numberOfRecords": 0,
-  "data": [
-    {
-      "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
-      "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
-      "consumerEmail": "string",
-      "consumerName": "string",
-      "consumerPhone": "string",
-      "consumerNationalID": "string",
-      "consumerAddress": {
-        "countryCode": "string",
-        "city": "string",
-        "zip": "string",
-        "street": "string",
-        "house": "string",
-        "apartment": "string"
-      },
-      "externalReference": "string"
-    }
-  ]
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|numberOfRecords|integer(int32)|false|none|none|
-|data|[[ConsumerSummary](#schemaconsumersummary)]¦null|false|none|none|
+|consumerAddress|[Address](#schemaaddress)|false|none|none|
+|externalReference|string¦null|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
+|active|boolean|false|none|none|
+|hasBankAccount|boolean|false|none|none|
+|hasCreditCard|boolean|false|none|none|
 
 <h2 id="tocS_CurrencyEnum">CurrencyEnum</h2>
 <!-- backwards compatibility -->
@@ -953,19 +1242,11 @@ Create consumer
 
 ```
 
-### Properties
+ILS
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|none|
+USD
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|ILS|
-|*anonymous*|USD|
-|*anonymous*|EUR|
+EUR
 
 <h2 id="tocS_Error">Error</h2>
 <!-- backwards compatibility -->
@@ -1005,7 +1286,9 @@ Create consumer
   "externalReference": "string",
   "billingDesktopRefNumber": "string",
   "sku": "string",
-  "origin": "string"
+  "origin": "string",
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -1017,6 +1300,13 @@ Create consumer
 |itemName|string|true|none|none|
 |price|number(double)|false|none|none|
 |active|boolean¦null|false|none|none|
+|currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
+|externalReference|string¦null|false|none|none|
+|billingDesktopRefNumber|string¦null|false|none|none|
+|sku|string¦null|false|none|none|
+|origin|string¦null|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
 <h2 id="tocS_ItemResponse">ItemResponse</h2>
 <!-- backwards compatibility -->
@@ -1038,7 +1328,9 @@ Create consumer
   "externalReference": "string",
   "billingDesktopRefNumber": "string",
   "sku": "string",
-  "active": true
+  "active": true,
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -1051,6 +1343,16 @@ Create consumer
 |updateTimestamp|string(byte)¦null|false|none|none|
 |itemName|string¦null|false|none|none|
 |price|number(double)|false|none|none|
+|currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
+|created|string(date-time)¦null|false|none|none|
+|operationDoneBy|string¦null|false|none|none|
+|correlationId|string¦null|false|none|none|
+|externalReference|string¦null|false|none|none|
+|billingDesktopRefNumber|string¦null|false|none|none|
+|sku|string¦null|false|none|none|
+|active|boolean|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
 <h2 id="tocS_ItemSummary">ItemSummary</h2>
 <!-- backwards compatibility -->
@@ -1066,7 +1368,9 @@ Create consumer
   "price": 0,
   "currency": "ILS",
   "externalReference": "string",
-  "billingDesktopRefNumber": "string"
+  "billingDesktopRefNumber": "string",
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -1078,59 +1382,11 @@ Create consumer
 |itemID|string(uuid)|false|none|none|
 |itemName|string¦null|false|none|none|
 |price|number(double)¦null|false|none|none|
-
-<h2 id="tocS_ItemSummarySummariesResponse">ItemSummarySummariesResponse</h2>
-<!-- backwards compatibility -->
-<a id="schemaitemsummarysummariesresponse"></a>
-<a id="schema_ItemSummarySummariesResponse"></a>
-<a id="tocSitemsummarysummariesresponse"></a>
-<a id="tocsitemsummarysummariesresponse"></a>
-
-```json
-{
-  "numberOfRecords": 0,
-  "data": [
-    {
-      "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
-      "itemName": "string",
-      "price": 0,
-      "currency": "ILS",
-      "externalReference": "string",
-      "billingDesktopRefNumber": "string"
-    }
-  ]
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|numberOfRecords|integer(int32)|false|none|none|
-|data|[[ItemSummary](#schemaitemsummary)]¦null|false|none|none|
-
-<h2 id="tocS_JToken">JToken</h2>
-<!-- backwards compatibility -->
-<a id="schemajtoken"></a>
-<a id="schema_JToken"></a>
-<a id="tocSjtoken"></a>
-<a id="tocsjtoken"></a>
-
-```json
-[
-  [
-    []
-  ]
-]
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[JToken](#schemajtoken)]|false|none|none|
+|currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
+|externalReference|string¦null|false|none|none|
+|billingDesktopRefNumber|string¦null|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
 <h2 id="tocS_OperationResponse">OperationResponse</h2>
 <!-- backwards compatibility -->
@@ -1171,23 +1427,9 @@ Create consumer
     ],
     "concurrencyToken": "string",
     "innerResponse": {},
-    "additionalData": {
-      "property1": [
-        []
-      ],
-      "property2": [
-        []
-      ]
-    }
+    "additionalData": null
   },
-  "additionalData": {
-    "property1": [
-      []
-    ],
-    "property2": [
-      []
-    ]
-  }
+  "additionalData": null
 }
 
 ```
@@ -1197,6 +1439,16 @@ Create consumer
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |message|string¦null|false|none|none|
+|status|[StatusEnum](#schemastatusenum)|false|none|success<br><br>warning<br><br>error|
+|entityID|integer(int64)¦null|false|none|none|
+|entityUID|string(uuid)¦null|false|none|none|
+|entityReference|string¦null|false|none|none|
+|correlationId|string¦null|false|none|none|
+|entityType|string¦null|false|none|none|
+|errors|[[Error](#schemaerror)]¦null|false|none|none|
+|concurrencyToken|string¦null|false|none|none|
+|innerResponse|[OperationResponse](#schemaoperationresponse)|false|none|none|
+|additionalData|any|false|none|none|
 
 <h2 id="tocS_PaymentTypeEnum">PaymentTypeEnum</h2>
 <!-- backwards compatibility -->
@@ -1210,20 +1462,13 @@ Create consumer
 
 ```
 
-### Properties
+card
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|none|
+cheque
 
-#### Enumerated Values
+cash
 
-|Property|Value|
-|---|---|
-|*anonymous*|card|
-|*anonymous*|cheque|
-|*anonymous*|cash|
-|*anonymous*|bank|
+bank
 
 <h2 id="tocS_ShowDeletedEnum">ShowDeletedEnum</h2>
 <!-- backwards compatibility -->
@@ -1237,19 +1482,11 @@ Create consumer
 
 ```
 
-### Properties
+OnlyActive
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|none|
+OnlyDeleted
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|*anonymous*|OnlyActive|
-|*anonymous*|OnlyDeleted|
-|*anonymous*|All|
+All
 
 <h2 id="tocS_StatusEnum">StatusEnum</h2>
 <!-- backwards compatibility -->
@@ -1263,19 +1500,89 @@ Create consumer
 
 ```
 
+success
+
+warning
+
+error
+
+<h2 id="tocS_SummariesResponse_ConsumerSummary">SummariesResponse_ConsumerSummary</h2>
+<!-- backwards compatibility -->
+<a id="schemasummariesresponse_consumersummary"></a>
+<a id="schema_SummariesResponse_ConsumerSummary"></a>
+<a id="tocSsummariesresponse_consumersummary"></a>
+<a id="tocssummariesresponse_consumersummary"></a>
+
+```json
+{
+  "numberOfRecords": 0,
+  "data": [
+    {
+      "consumerID": "9e541e9d-045d-45e2-8cf0-ead10a4f23cf",
+      "terminalID": "57d5dd68-4280-44f6-a8f7-547180e3a1d6",
+      "consumerEmail": "string",
+      "consumerName": "string",
+      "consumerPhone": "string",
+      "consumerNationalID": "string",
+      "consumerAddress": {
+        "countryCode": "string",
+        "city": "string",
+        "zip": "string",
+        "street": "string",
+        "house": "string",
+        "apartment": "string"
+      },
+      "externalReference": "string",
+      "woocommerceID": "string",
+      "ecwidID": "string",
+      "active": true,
+      "hasBankAccount": true,
+      "hasCreditCard": true
+    }
+  ]
+}
+
+```
+
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|integer(int32)|false|none|none|
+|numberOfRecords|integer(int32)|false|none|none|
+|data|[[ConsumerSummary](#schemaconsumersummary)]¦null|false|none|none|
 
-#### Enumerated Values
+<h2 id="tocS_SummariesResponse_ItemSummary">SummariesResponse_ItemSummary</h2>
+<!-- backwards compatibility -->
+<a id="schemasummariesresponse_itemsummary"></a>
+<a id="schema_SummariesResponse_ItemSummary"></a>
+<a id="tocSsummariesresponse_itemsummary"></a>
+<a id="tocssummariesresponse_itemsummary"></a>
 
-|Property|Value|
-|---|---|
-|*anonymous*|success|
-|*anonymous*|warning|
-|*anonymous*|error|
+```json
+{
+  "numberOfRecords": 0,
+  "data": [
+    {
+      "itemID": "f1f85a48-b9b1-447d-a06c-c1acf57ed3a8",
+      "itemName": "string",
+      "price": 0,
+      "currency": "ILS",
+      "externalReference": "string",
+      "billingDesktopRefNumber": "string",
+      "woocommerceID": "string",
+      "ecwidID": "string"
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|numberOfRecords|integer(int32)|false|none|none|
+|data|[[ItemSummary](#schemaitemsummary)]¦null|false|none|none|
 
 <h2 id="tocS_UpdateConsumerRequest">UpdateConsumerRequest</h2>
 <!-- backwards compatibility -->
@@ -1306,11 +1613,14 @@ Create consumer
   "billingDesktopRefNumber": "string",
   "active": true,
   "bankDetails": {
-    "paymentType": "card",
     "bank": 0,
     "bankBranch": 0,
-    "bankAccount": "string"
-  }
+    "bankAccount": "string",
+    "paymentType": "card",
+    "amount": 0
+  },
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -1326,6 +1636,16 @@ Update end-customer info
 |consumerName|string|true|none|End-customer name|
 |consumerPhone|string¦null|false|none|End-customer Phone|
 |consumerNationalID|string¦null|false|none|End-customer National ID|
+|consumerAddress|[Address](#schemaaddress)|false|none|none|
+|externalReference|string¦null|false|none|ID in external system|
+|origin|string¦null|false|none|Origin of customer|
+|updateTimestamp|string(byte)|true|none|Concurrency check|
+|consumerSecondPhone|string¦null|false|none|End-customer Phone|
+|billingDesktopRefNumber|string¦null|false|none|ID in BillingDesktop system|
+|active|boolean|false|none|none|
+|bankDetails|[BankDetails](#schemabankdetails)|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 
 <h2 id="tocS_UpdateItemRequest">UpdateItemRequest</h2>
 <!-- backwards compatibility -->
@@ -1342,7 +1662,9 @@ Update end-customer info
   "currency": "ILS",
   "updateTimestamp": "string",
   "externalReference": "string",
-  "sku": "string"
+  "sku": "string",
+  "woocommerceID": "string",
+  "ecwidID": "string"
 }
 
 ```
@@ -1354,4 +1676,10 @@ Update end-customer info
 |itemID|string(uuid)|false|none|none|
 |itemName|string|true|none|none|
 |price|number(double)|false|none|none|
+|currency|[CurrencyEnum](#schemacurrencyenum)|false|none|ILS<br><br>USD<br><br>EUR|
+|updateTimestamp|string(byte)¦null|false|none|none|
+|externalReference|string¦null|false|none|none|
+|sku|string¦null|false|none|none|
+|woocommerceID|string¦null|false|none|External ID inside https://woocommerce.com system|
+|ecwidID|string¦null|false|none|External ID inside https://www.ecwid.com system|
 

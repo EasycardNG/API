@@ -1,0 +1,16 @@
+@startuml
+!theme blueprint
+participant "Consumer" as consumer
+participant "Web Site" as website
+participant "EasyCard API" as api
+
+consumer->website: start payment
+website->website: get buyer's EasyCard <b>ConsumerID</b>
+website->api: get consumer's <b>Card Tokens</b> saved in EasyCard
+api-->website: list of saved <b>Card Tokens</b>
+website->consumer: show list of saved cards\nto consumer to let choose one 
+consumer->website: select one of the saved cards\n(associated with <b>CreditCardTokenID</b>)
+website->api:create Billing Deal record\nusing selected <b>CreditCardTokenID</b> and <b>ConsumerID</b>
+website->website: store Billing Deal details
+website->consumer: payment completed 
+@enduml

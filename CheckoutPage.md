@@ -9,7 +9,7 @@ Sections
 
 - [Examples](Readme.md#examples)
 
-- [API reference (used within Checkout Page)](TransactionsApi.md)
+- [API reference (used within Checkout Page)](TransactionsApi.md#transactionsapi)
 
 - [Checkout Page - common information](#checkout-page---common-information)
 
@@ -22,6 +22,8 @@ Sections
 - [Checkout Page - Create Consumer flow](#checkout-page---create-consumer-flow)
 
 - [Metadata API](MetadataApi.md)
+
+- [Checkout Page - Only Save Consumer's Card](#checkout-page---only-save-card)
 
 
 <br/>
@@ -126,11 +128,11 @@ EasyCard Next Generation also provides more secured and solid way to collect Che
 
 ![Advanced Checkout Sequence Diagram](images/AdvancedCheckoutSequenceDiagram.svg) 
 
-The general idea is to keep all information required for Checkout Page securely in structured way (which is more convenient than query string). You can use [Create Payment Intent API method](TransactionsApi.md#create-payment-intent-payment-link) to create it. This method returns short url which you can use to redirect your consumer to Checkout Page (so, in other words this method creates payment link).
+The general idea is to keep all information required for Checkout Page securely in structured way (which is more convenient than query string). You can use [Create Payment Intent API method](TransactionsApi.md#create-payment-link-to-checkout-page) to create it. This method returns short url which you can use to redirect your consumer to Checkout Page (so, in other words this method creates payment link).
 
 As soon consumer will enter credit card details and pressed `Pay With EasyCard` button, Checkout Page will be redirected to the link, specified in `Create Payment Intent` parameters. _EasyCard `TransactionID` will be added to redirect url_.
 
-Then you can use this `TransactionID` to get payment transaction details from the API - please use [Get Transaction Details](TransactionsApi.md#get-transaction-details) method.
+Then you can use this `TransactionID` to get payment transaction details from the API - please use [Get Transaction Details](TransactionsApi.md#get-payment-transaction-details) method.
 
 Please find out [API description](TransactionsApi.md) in corresponding section.
 
@@ -150,3 +152,12 @@ There is additional option to enhance integration of EasyCard and merchant's sys
 ![Checkout Sequence Diagram - Create Consumer flow](images/CheckoutSequenceWithConsumerDiagram.svg) 
 
 It is strongly recommended to do not create new `Consumer` record per each deal - you can use API to find existing consumer by original ID from your system (please use `ExternalReference` to store it), consumer's email, NationalID etc. But preferred way is to save EasyCard's `ConsumerID` to your system.
+
+
+Checkout Page - Only Save Card
+-------------------------------------------
+
+You can just to save consumer's card to use it in further deals. In this case when creating `Payment Intent` using API, please specify `UserAmount = false` and `paymentRequestAmount = 0`. EasyCard's `ConsumerID` is required in this case. Please note that in this case _EasyCard `TransactionID` will not be added to redirect url but `TokenID` will be added_. This `TokenID` is an ID of saved consumer's card inside EasyCard system.
+
+> Please note that you will not be able to get full consumer's card number using API.
+
