@@ -17,6 +17,7 @@ Sections
 
 - [How to use `Consumer` and saved `Card Token`](#how-to-use-consumer-and-saved-card-token)
 
+- [Removing `Consumer's` saved `Card Tokens`](#removing-consumers-saved-card-tokens)
 
 
 
@@ -65,6 +66,7 @@ Next point is that saved credit cards (and `Billing Deal` itself) is always atta
 ![Billing Deal - general flow](images/BillingSequenceDiagram.svg) 
 
 
+
 How to use `Consumer` and saved `Card Token`
 -------------------------------
 
@@ -81,3 +83,10 @@ So, there are next possible situations:
 * The last case when you need to add new `Card Token` to previously created `Consumer` record. It can happens in next cases - no cards was saved previously, consumer do not want to use one of the previously saved cards but want to add new one, all previously saved cards are expired or removed by administrator ot customer.
 
 ![Billing Deal - existing consumer and new token](images/BillingWithExitingCustomerAltSequenceDiagram.svg) 
+
+
+Removing `Consumer's` saved `Card Tokens`
+-------------------------------
+
+Once Card Token was added at some point, consumer (or administrator) should have ability to remove saved card from the system. Please use [Remove Saved Card Token method](TransactionsApi.md#delete-credit-card-token) to remove saved card by ID.
+
