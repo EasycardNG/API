@@ -18,7 +18,7 @@ Next, you need to select event type (for which you want to get webhook requests)
 You cannot use localhost* addresses, as well any intranet addresses
 ```
 
-> Please note: for the moment you need to reauest EasyCard administration team to make Webhooks configuration for you.
+> Please note: for the moment you need to request EasyCard administration team to make Webhooks configuration for you.
 
 <br/>
 

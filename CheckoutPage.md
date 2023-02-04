@@ -25,6 +25,8 @@ Sections
 
 - [Checkout Page - Only Save Consumer's Card](#checkout-page---only-save-card)
 
+- [Google Pay](GooglePay.md)
+
 
 <br/>
 
@@ -77,6 +79,7 @@ There are two options to generate Checkout Page:
 > Checkout Page url for live environment is [https://checkout.e-c.co.il](https://checkout.e-c.co.il)
 
 <!-- <div style="page-break-after: always;"></div> -->
+If you are planning to provide [Google Pay&trade;](https://developers.google.com/pay) payment method to your consumers please refer [this section](GooglePay.md)
 
 <br/><br/>
 
