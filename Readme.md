@@ -5,6 +5,7 @@ In this repository you can find out developer documentation and examples for Eas
 
 Sections
 -------------------------------
+
 - [Environments](#environments)
 
 - [Examples](#examples)
@@ -24,6 +25,8 @@ Sections
 - [Ecwid payment method setup](ecng-ecwid/readme.md)
 
 - [Billing (Recurring Payments)](Billing.md)
+  
+- [Google Pay](GooglePay.md)
 
 <br/><br/>
 
