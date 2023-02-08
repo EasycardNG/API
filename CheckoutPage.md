@@ -25,7 +25,7 @@ Sections
 
 - [Checkout Page - Only Save Consumer's Card](#checkout-page---only-save-card)
 
-- [Google Pay](GooglePay.md)
+- [Google Pay&trade;](GooglePay.md)
 
 
 <br/>

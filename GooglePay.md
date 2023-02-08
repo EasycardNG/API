@@ -1,4 +1,4 @@
-EasyCard Next Generation API v1 - _Using Google Pay on Checkout Page_
+EasyCard Next Generation API v1 - _Using Google Pay&trade; on Checkout Page_
 =================================================================
 
 > If you are planning to provide [Google Pay&trade;](https://developers.google.com/pay) payment method to your consumers please check requirements below
@@ -26,7 +26,7 @@ As a result, a new payment method will appear on the checkout page - Google Pay:
 
 <br/>
 
-Google Pay and Wallet Console configuration
+Google Pay&trade; and Wallet Console configuration
 -----------------------------------------------------------------
 
 Before enabling Google Pay feature in your EasyCard terminal, please ensure that your Google Pay account meets all requirements. Please use [Google Pay and Wallet Console](https://pay.google.com/business/console) for registration and management actions. 

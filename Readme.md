@@ -26,7 +26,7 @@ Sections
 
 - [Billing (Recurring Payments)](Billing.md)
   
-- [Google Pay](GooglePay.md)
+- [Google Pay&trade;](GooglePay.md)
 
 <br/><br/>
 
