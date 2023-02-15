@@ -37,6 +37,25 @@ After registration you can get _Google Merchant ID_ using that console and then 
 
 <br/>
 
+Google Pay&trade; technical detail
+-----------------------------------------------------------------
+
+If you need more details about Google Pay API parameters what we are using on Checkout Page, please refer to the next documents: [IsReadyToPayRequest](https://developers.google.com/pay/api/web/reference/request-objects#IsReadyToPayRequest) and [PaymentDataRequest](https://developers.google.com/pay/api/web/reference/request-objects#PaymentDataRequest)
+
+We support both _PAN_ONLY_ and _CRYPTOGRAM_3DS_ payment methods. Please note that PAN_ONLY available only for terminals which support "phone transactions" ("card not present"). Both payment options will be enabled automatically depends on terminal settings - you do not need to specify any parameters or make any additional settings.
+
+You do not need to specify _gateway_ or _gatewayMerchantID_ - this is processed automatically.
+ 
+We support only Israel based merchants. We support any authorization methods provided by _Shva_ (which is the same as for regular cards processing)
+
+We support all card networks which works in Israel: "AMEX", "MASTERCARD", "VISA". If you need additional details - please contact our support.
+
+We do not support billing addresses processing for now.
+
+We do not expect that merchant will send any Google Pay related data via API - we are doing payments on  behalf of the merchant using our web checkout page.
+
+<br/>
+
 Environments
 -----------------------------------------------------------------
  
