@@ -24,6 +24,8 @@ Sections
 
 - [Ecwid payment method setup](ecng-ecwid/readme.md)
 
+- [Woocommerce integration](woocommerce/Readme.md)
+
 - [Billing (Recurring Payments)](Billing.md)
   
 - [Google Pay&trade;](GooglePay.md)
