@@ -1,7 +1,7 @@
 EasyCard Next Generation API v1 - _Webhooks_
 =================================================================
 
-EasyCard provides ability to use user-defined HTTP callbacks (Webhooks) triggered by several events in EasyCard system.
+EasyCard provides the ability to use user-defined HTTP callbacks (Webhooks) triggered by several events in EasyCard system.
 
 <br/>
 
@@ -13,7 +13,7 @@ First of all you need to specify security header (name and value) to protect mer
 
 Next, you need to select event type (for which you want to get webhook requests) and specify webhook url on your side.
 
-
+> Please note: Security Header will be implemented and relevant in 2025
 ```
 You cannot use localhost* addresses, as well any intranet addresses
 ```
