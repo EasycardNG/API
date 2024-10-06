@@ -41,8 +41,11 @@ After Payment Transaction creation, appropriate event will be triggered and conf
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Next JSON `POST` request will be sent to configured url when appropriate event will be triggered:
+<br/>
 
+Webhook format 
+-----------------------------------------------------------------
+JSON `POST` request will be sent to the configured url when the appropriate event is triggered:
 ```
 {
     "eventID": "632eb049-8562-411d-ab9f-ab92007f0293",
@@ -57,6 +60,20 @@ Next JSON `POST` request will be sent to configured url when appropriate event w
     "errorMesage": "<error message will be present only in case of failure>"
 }
 ```
+![image](https://github.com/user-attachments/assets/30934095-87ad-4a00-a123-f728839d785c)
+
+-----------------------------------------------------------------
+<br/>
+
+Get transaction details using EntityReference from the Webhook event 
+-----------------------------------------------------------------
+Using EntityReference we can get transaction details
+
+Need additional API Request  https://api.e-c.co.il/api/transactions/{{EntityReference}}
+
+https://api.e-c.co.il/api/transactions/8e350a17-3aca-46e5-a885-ae62007c8b33 
+
+<br/>
 
 |Name|Type|Description|
 |---|---|---|
@@ -96,7 +113,5 @@ Below you can find the list of all event available for webhook configuration for
 |||||
 |Invoice|InvoiceGenerated|false|Invoice generated in invoicing system|
 |Invoice|InvoiceGenerationFailed|true|Invoice generation failed|
-
-
 
 
