@@ -22,6 +22,10 @@ You cannot use localhost* addresses, as well any intranet addresses
 
 <br/>
 
+> Please note: for the moment Security Header is not required
+ 
+<br/>
+
 Flow
 -----------------------------------------------------------------
 
