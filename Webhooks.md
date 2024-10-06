@@ -22,6 +22,11 @@ You cannot use localhost* addresses, as well any intranet addresses
 
 <br/>
 
+> Please note: for the moment Secure Header is not required. Delivery 2025
+
+<br/>
+
+
 Flow
 -----------------------------------------------------------------
 
