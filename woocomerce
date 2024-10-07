@@ -1,0 +1,57 @@
+
+ 
+
+Woocomerce integration with ECNG plugin
+Instructions for installing the plugin  
+https://www.e-c.co.il/woocommerce-plugin   (Hebrew)
+1.	Enter the site's control panel
+2.	Go to the plugins and select "New plugin" 
+ 
+3.	In a new plugin window search for "Easycard NG" and click the "Install" button
+      
+4.	When the installation is complete, go to WooCommerce > Settings:
+    
+5.	Enter the "Payments" button and click the "Manage" button in the Easycard line:
+ 
+6.	We will complete the settings:
+•	Activating the payment method – Enable Easycard – must be marked with a V
+•	Title – the name of the payment method as it will appear on the website
+•	Description – Description of the payment method as it will appear on the website
+•	Logo – URL to Logo Made for Payment Methods
+•	Instructions – additional text that will be displayed on the thank you page and in the email sent with the invitation.
+•	Payment Mode – Choose the desired billing method – Redirect or IFrame.
+•	DealType – Here you can choose between J4 (instant debit) or an armor transaction (J5), so it is the merchant's responsibility to fulfill the transaction when the order is delivered.
+•	Checkout Page Language
+•	Enable Sandbox Environment – If you were provided by Isicard with a test terminal, and only in this situation, mark V in this field, no actual charges will be made.
+•	Private Key – Enter the API key given to you by EasyCard.
+ 
+
+
+
+Affect Woocomerce settings to our plugin
+1.	Add Product/items
+Install additional plugin for item code
+https://wordpress.com/de/plugins/product-code-for-woocommerce  
+ 
+2.	How to add SKU and Item code. Select item from the list, open details
+https://www.youtube.com/watch?v=BCPjthg0FOs 
+Inventory
+ 
+
+3.	How to enabled Direct Checkout
+https://woocommerce.com/document/cashier-for-woocommerce/how-to-enable-a-direct-checkout/#:~:text=Go%20to%3A%20WordPress%20Admin%20%3E%20WooCommerce,%2C%20Purchase%20Now%2C%20or%20others.
+
+4.	Change payment button Woocomerce store
+ 
+
+
+
+5.	Blocks and Classic Woocomerce editor
+ECNG plugin is not supported with Blocker Editor, supported only with Classic editor 
+https://wordpress.org/plugins/classic-editor/#description 
+ 
+6.	“Thank you” page
+“Thank you page” by default is Woocomerce “Thank you page”, customer “Thank you page” is not supported
+ 
+
+
