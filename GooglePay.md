@@ -5,7 +5,10 @@ EasyCard Next Generation API v1 - _Using Google Pay&trade; on Checkout Page_
 
 [Google Pay&trade;](https://developers.google.com/pay) is the fast, simple way to pay with Google
 
-Google Pay allows you to use NFC capable Android devices to make payments. It brings together everything you need at checkout and keeps your payment info safe in your Google Account until you're ready to pay.
+Google Pay is compatible with the majority of modern Android devices across a wide variety of manufacturers and form factors, including mobile phones, tablets, and Wear OS by Google devices. 
+
+https://developers.google.com/pay/issuers/overview/supported-devices
+
 
 <br/>
 
@@ -60,3 +63,10 @@ Environments
 -----------------------------------------------------------------
  
  Please note, that [Sandbox](Readme.md#environments) environment of EasyCard always configured for Google Pay _TEST_ environment and EasyCard Production is pointed to Google Pay _PRODUCTION_ environment.
+ 
+<br/>
+
+NOTE
+-----------------------------------------------------------------
+
+Google Pay Payment method is allowed in Google Chrome Desktop only for Easy Card terminal where CVV and National ID are not required 
