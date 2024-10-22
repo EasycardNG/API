@@ -29,26 +29,34 @@ Authentication
 
 ```php
 <?php
+//Access token
+function getToken(){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,"https://identity.e-c.co.il/connect/token");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	
+	//Remove for production code. ONLY FOR TEST PURPOSES
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-$ch = curl_init();
+	$data = array('client_id'=>'terminal',
+				  'grant_type'=>'terminal_rest_api',
+				  'authorizationKey'=>'YOUR_TERMINAL_PRIVATE_KEY');
+				  
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
 
-curl_setopt($ch, CURLOPT_URL,"https://identity.e-c.co.il/connect/token");
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS,
-            "client_id=terminal&grant_type=terminal_rest_api&authorizationKey=hL5pXeI96df0wxCb....IWYcmhJH2bye1gg==");
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+	// receive server response ...
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$server_output = curl_exec ($ch);
+	curl_close ($ch);
 
-
-// receive server response ...
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-$server_output = curl_exec ($ch);
-
-curl_close ($ch);
-
-// further processing ....
-if ($server_output == "OK") { ... } else { ... }
-
+	if($server_output){
+		$response = json_decode($server_output);
+		return $response->access_token;
+	}
+	//something went wrong
+	return false;
+}
 ?>
 ```
 
