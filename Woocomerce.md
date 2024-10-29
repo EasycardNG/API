@@ -110,8 +110,25 @@ https://wordpress.org/plugins/classic-editor/#description
  ![image](https://github.com/user-attachments/assets/c5e33129-ec2e-4072-93cd-a43e1f66dc35)
  
  <br/>
+
+ Add Coupons/Sales for payment
+ --------------------------------------------------------------
+
+ Marketing-> Coupons
  
-“Thank you” page
+ ![image](https://github.com/user-attachments/assets/7972a555-56dd-4768-a010-d72c36ef0075)
+ 
+Fill form and submit
+
+![image](https://github.com/user-attachments/assets/a2c8a127-1fcc-43f0-b9c5-150e3ad1b3a0)
+
+ Add code coupon as a discount:
+ 
+ ![image](https://github.com/user-attachments/assets/3afd6d57-b642-4596-8dcd-38d94dcb5ca8)
+
+ <br/>
+
+ “Thank you” page
 ----------------------------------------------------------------
 
 “Thank you page” by default is Woocomerce “Thank you page”, customer “Thank you page” is not supported
