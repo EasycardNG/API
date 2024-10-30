@@ -136,4 +136,16 @@ Fill form and submit
  ![image](https://github.com/user-attachments/assets/b8bd1633-4096-40cd-8c6b-601f83f194e4)
 
 
+ <br/>
+
+Webhooks
+----------------------------------------------------------------
+
+ECNG terminal settings 
+
+Add webhook: Return redirect URL + /wc-api/ecng_webhook
+
+![image](https://github.com/user-attachments/assets/30396daf-2575-4393-a495-e9ae7ffc5c70)
+
+
 
