@@ -84,7 +84,7 @@ Inventory
 
  <br/>
  
- SKU and Product Code should be the same value (for RapidOne clients)
+ SKU and Product Code should be the same value (for clients with RapidOne and ICount invoice integration)
 
 ![image](https://github.com/user-attachments/assets/02afa62c-368f-4d64-bd61-b0c69002d9ad)
 
