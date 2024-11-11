@@ -83,6 +83,12 @@ Inventory
 ![image](https://github.com/user-attachments/assets/93cf6f35-bd3f-4105-932c-b0446c29219c)
 
  <br/>
+ 
+ SKU and Product Code should be the same value (for RapidOne clients)
+
+![image](https://github.com/user-attachments/assets/02afa62c-368f-4d64-bd61-b0c69002d9ad)
+
+  <br/>
 
 Affect Woocomerce settings to our plugin. How to enable Direct Checkout
 -----------------------------------------------------------------
