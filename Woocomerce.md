@@ -153,5 +153,32 @@ Add webhook: Return redirect URL + /wc-api/ecng_webhook
 
 ![image](https://github.com/user-attachments/assets/30396daf-2575-4393-a495-e9ae7ffc5c70)
 
+<br/>
 
+Order Status
+----------------------------------------------------------------
 
+Woocomerce order statuses
+https://woocommerce.com/document/managing-orders/order-statuses/
+
+![image](https://github.com/user-attachments/assets/1b7b6ccb-44e0-4051-a2b0-0a7c00c18a69)
+
+<br/>
+
+Payment Gateway Taxes settings 
+----------------------------------------------------------------
+The case when the Price includes Tax
+
+General 
+
+![image](https://github.com/user-attachments/assets/0bc69ea1-a6de-43dd-85cd-097841c6ded4)
+
+Tax
+
+![image](https://github.com/user-attachments/assets/6eb5886c-359a-4937-aa32-bb3ef5d84851)
+
+Shipping Zone settings
+
+![image](https://github.com/user-attachments/assets/9a181e0e-2254-42fc-a184-30800309a2d9)
+
+<br/>
