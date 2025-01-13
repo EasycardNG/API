@@ -410,3 +410,18 @@ Customer Mail or phone number is mandatory for the link
 }
 
 ```
+# Link expired by due Date and Time  if "dueDate" is not Null
+
+Example  "dueDate": "2026-01-15T00:00:00Z" UTC Format "YYYY-MM-DDTHH:MM:SSZ"
+
+The link will be available for payment till 14.01.2026 23:59
+
+It will expire from 15.01.2026 00:00
+
+# Israel Standard Time (IST) and Coordinated Universal Time (UTC)
+
+"UTC": "2026-05-15T00:00:00Z" is  IST "2026-05-15T02:00:00Z"
+
+IST is 2 hours ahead during winter and 3 hours ahead during summer.
+
+#
