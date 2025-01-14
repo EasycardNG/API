@@ -37,8 +37,9 @@ Site Editor
 ![image](https://github.com/user-attachments/assets/f508b62f-4f43-4c80-a735-40e3f6276890)
 
 3. Data for js files
-   
-![image](https://github.com/user-attachments/assets/e6c23d8e-2041-498f-9e64-9edeac2cc222)
+
+![image](https://github.com/user-attachments/assets/300a9f19-68cf-4954-861e-47da61ad71e6)
+
 
   Easy Card config file
  --------------------------------------------------------------- 
@@ -256,7 +257,50 @@ const getToken = async (privateApiKey) => {
     return null;
 }
  ```
- 4. Publish plugin config
+4.  Backend
+ --------------------------------------------------------------- 
+
+ Add HTTP-function file
+ 
+ ![image](https://github.com/user-attachments/assets/119ef71d-ef05-4c31-8fb8-79a5fddd0c1f)
+
+```j
+import { ok, badRequest } from "wix-http-functions";
+import wixPaymentProviderBackend from "wix-payment-provider-backend";
+
+// An endpoint for receiving updates about transactions.
+export async function post_updateTransaction(request) {
+  console.log("Invoked post_updateTransaction");
+  const transactionRequestBody = await request.body.json();
+  console.log(transactionRequestBody);
+  const response = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  // Validate the request content.
+  if (transactionRequestBody.eventName === "TransactionCreated") {
+    // Update the transaction status on your site. This code assumes that the Wix
+    // transaction ID and the payment provider's transaction ID are included in
+    // the URL as query parameters.
+    await wixPaymentProviderBackend.submitEvent({
+      event: {
+        transaction: {
+          wixTransactionId: transactionRequestBody.entityExternalReference,
+          //pluginTransactionId: request.query["pluginTransactionId"],
+        },
+      },
+    });
+    return ok(response);
+  } else {
+    return badRequest(response);
+  }
+}
+
+```
+
+5. Publish plugin config
+ --------------------------------------------------------------- 
     
 ![image](https://github.com/user-attachments/assets/a6b7ff33-aa13-44e0-850f-e78039a9d49a)
 
