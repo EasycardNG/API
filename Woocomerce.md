@@ -111,10 +111,14 @@ Change the payment button Woocomerce store
 
 ECNG plugin is not supported with Blocker Editor, supported only with Classic editor 
 
-https://wordpress.org/plugins/classic-editor/#description 
+Pages. Select and Edit page
 
- ![image](https://github.com/user-attachments/assets/c5e33129-ec2e-4072-93cd-a43e1f66dc35)
- 
+![image](https://github.com/user-attachments/assets/e8ee3326-ce36-473b-affa-a7d00176035e)
+
+Should be selected classic page editor, not BLOCK
+
+![image](https://github.com/user-attachments/assets/fc589c6d-1425-464f-bc8d-f3fa66bb9cb2)
+
  <br/>
 
  Add Coupons/Sales for payment
