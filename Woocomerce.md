@@ -100,7 +100,7 @@ https://woocommerce.com/document/cashier-for-woocommerce/how-to-enable-a-direct-
 Change the payment button Woocomerce store
 -----------------------------------------------------------------
 
- ![image](https://github.com/user-attachments/assets/a623c976-f34a-40a8-a272-024085b1597c)
+![image](https://github.com/user-attachments/assets/0ce45e9d-7a8b-42a4-a167-1c3d368f0b69)
  
 <br/>
  
