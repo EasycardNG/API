@@ -171,6 +171,9 @@ https://woocommerce.com/document/managing-orders/order-statuses/
 
 Payment Gateway Taxes settings 
 ----------------------------------------------------------------
+
+https://woocommerce.com/document/setting-up-taxes-in-woocommerce/ 
+
 The case when the Price includes Tax
 
 General 
@@ -184,5 +187,8 @@ Tax
 Shipping Zone settings
 
 ![image](https://github.com/user-attachments/assets/9a181e0e-2254-42fc-a184-30800309a2d9)
+
+![image](https://github.com/user-attachments/assets/b7a60083-1c0a-472c-937d-27790adfa7bf)
+
 
 <br/>
