@@ -34,7 +34,7 @@ Site Editor
 
  ![image](https://github.com/user-attachments/assets/91afc92a-67f5-4468-a2ad-e62ba13cd7fc)
 
-![image](https://github.com/user-attachments/assets/f508b62f-4f43-4c80-a735-40e3f6276890)
+ ![image](https://github.com/user-attachments/assets/24369296-b83d-4fb0-b39f-e0282511980b)
 
 3. Data for js files
 
@@ -320,7 +320,7 @@ WIX Dashboard
 ECNG (Easy Card) Terminal settings 
 =================================================================
 
-1. Add Redirect URL WIX 
+1. Add the Redirect URL WIX https://cashier-services.wix.com/
 
 ![image](https://github.com/user-attachments/assets/4d162e5e-787b-4d48-9c8a-794b0e3eb8c0)
 
