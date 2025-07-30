@@ -170,6 +170,7 @@ export const createTransaction = async (options, context) => {
         totalAmount += element.quantity * element.price;
         items.push({
                 "price": element.price / 100,
+                "amount": element.price * element.quantity / 100,
                 "itemName": element.name,
                 "currency": order.currency,
                 "quantity": element.quantity,
