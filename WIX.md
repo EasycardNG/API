@@ -298,10 +298,9 @@ const getToken = async (privateApiKey) => {
  ```
  5. Publish plugin config
  --------------------------------------------------------------- 
-    
-![image](https://github.com/user-attachments/assets/a6b7ff33-aa13-44e0-850f-e78039a9d49a)
-
-
+ 
+ <img width="1901" height="907" alt="image" src="https://github.com/user-attachments/assets/8356ede8-868a-45ff-af4d-6f6b155072ce" />
+ 
 WIX Dashboard 
 =================================================================
 
