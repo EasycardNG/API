@@ -875,8 +875,8 @@ None ( Scopes: terminal_or_merchant_frontend_or_admin )
 
 ## Create payment link to Checkout Page
 
+## If the Merchant is using more than one terminal, "TerminalId" is mandatory for the request
 `POST /api/paymentIntent`
-
 > Body parameter
 
 ```json
