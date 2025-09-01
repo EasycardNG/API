@@ -35,4 +35,4 @@ Confirm or reject payment from KashCash APP
 After successful payment from KashCash app, the page redirects to the "Thank you page"
 
 Transaction list: filter by Origin KashCash
-<img width="817" height="569" alt="image" src="https://github.com/user-attachments/assets/eab97360-0242-432f-b1fe-cb3baadc072b" />
+<img width="854" height="317" alt="image" src="https://github.com/user-attachments/assets/c372120a-2167-43ca-9b27-83ea22e0a43b" />
