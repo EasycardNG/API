@@ -424,4 +424,17 @@ It will expire from 15.01.2026 00:00
 
 IST is 2 hours ahead during winter and 3 hours ahead during summer.
 
-#
+# Extended response for checkout transaction- API payment intent
+
+Terminal settings for the Checkout page: 
+1. Allow "Extended response for checkout transaction"
+2. Return redirect URL
+   
+<img width="1546" height="162" alt="image" src="https://github.com/user-attachments/assets/027c1e60-05a9-4095-ac7e-186b4c7ec41c" />
+
+Payment intent JSON should have "redirectUrl": "https://ecng-testwebstore.azurewebsites.net",
+
+- After a successful transaction from the Checkout page, ReturnRedirectURL callback, TransactionID, Customer data, Credit card token, etc. 
+
+https://ecng-testwebstore.azurewebsites.net/?transactionID=f4e56377-285d-485a-8294-b34d00c8c075?...
+
