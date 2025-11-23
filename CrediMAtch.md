@@ -11,13 +11,7 @@ Add new Integration "Reconciliation Service"-
 
 <img width="762" height="398" alt="image" src="https://github.com/user-attachments/assets/d5e3e4fb-11be-4693-a8fd-e1b95fe5a6bb" />
 
-Fill the form for CrediMatch – the same data for all Easy card merchants
-
-User Name: api@easycard.co.il
-
-Password: jC4@lwICg3x5
-
-ID Invoice 8abe6a88-aed4-4bc8-af09-c8aea4a93058
+Fill the form for CrediMatch – 
 
 <img width="1629" height="219" alt="image" src="https://github.com/user-attachments/assets/9ef2c4c0-baf6-4447-aa8e-f40060e98d0c" />
 
