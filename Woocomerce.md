@@ -5,6 +5,10 @@ EasyCard Next Generation API v1 - _Woocomerce_
 
 Woocomerce integration with ECNG plugin
 ----------------------------------------------------------------
+Note: The Easy Card plugin is supported only with the Classic checkout page 
+https://docs.wpovernight.com/woocommerce-postcode-checker/classic-checkout-and-woo-checkout-blocks/ 
+<img width="980" height="442" alt="image" src="https://github.com/user-attachments/assets/5323a831-4447-4be5-987f-6d784f6278a9" />
+
 
  <br/>
 
