@@ -177,6 +177,15 @@ export const createTransaction = async (options, context) => {
                 "externalReference": element._id,
             });
     });
+   if (order.charges.shipping) {
+        items.push({
+                "price": order.charges.shipping / 100,
+                "amount": order.charges.shipping / 100,
+                "itemName": "Shipping",
+                "currency": order.currency,
+                "quantity": 1,
+            });
+    }
     totalAmount = totalAmount / 100;
 
     const data =     
