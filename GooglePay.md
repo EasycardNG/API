@@ -17,6 +17,10 @@ EasyCard configuration
 
 To allow _Google Pay_ payment method on EasyCard checkout page you need to enable _Google Pay Feature_
 
+NOTE: Merchant Bussiness Name and Marketing Name should be in ENGLISH
+
+<img width="1621" height="165" alt="image" src="https://github.com/user-attachments/assets/d03864f6-d232-4ae5-8485-1d6bb64cb93a" />
+
 >Please note: for the moment you need to request EasyCard administration team to enable Google Pay feature for you.
 
 Next, you need to specify your company _Google Merchant ID_ in terminal settings:
