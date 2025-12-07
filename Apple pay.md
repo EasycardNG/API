@@ -23,6 +23,11 @@ EasyCard configuration
 
 To allow _Apple Pay_ payment method on EasyCard checkout page you need to enable _Apple Pay Feature_
 
+NOTE: Merchant Bussiness Name and Marketing Name should be in ENGLISH
+
+<img width="1621" height="165" alt="image" src="https://github.com/user-attachments/assets/a80a587a-aeb8-4aef-a19e-efa584486250" />
+
+
 >Please note: for the moment you need to request EasyCard administration team to enable Apple Pay feature for you.
 
 As a result, a new payment method will appear on the checkout page - Apple Pay:
