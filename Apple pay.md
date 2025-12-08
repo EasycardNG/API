@@ -35,6 +35,7 @@ As a result, a new payment method will appear on the checkout page - Apple Pay:
 Apple Pay&trade; technical detail
 -----------------------------------------------------------------
 
+PanEntryMode 52 should be allowed from Visa Cal
 
 We support only Israel based merchants. We support any authorization methods provided by _Shva_ (which is the same as for regular cards processing)
 
