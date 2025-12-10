@@ -43,6 +43,8 @@ After registration you can get _Google Merchant ID_ using that console and then 
 Google Pay&trade; technical detail
 -----------------------------------------------------------------
 
+PanEntryMode 52 should be allowed from Visa Cal 
+
 If you need more details about Google Pay API parameters what we are using on Checkout Page, please refer to the next documents: [IsReadyToPayRequest](https://developers.google.com/pay/api/web/reference/request-objects#IsReadyToPayRequest) and [PaymentDataRequest](https://developers.google.com/pay/api/web/reference/request-objects#PaymentDataRequest)
 
 We support both _PAN_ONLY_ and _CRYPTOGRAM_3DS_ payment methods. Please note that PAN_ONLY available only for terminals which support "phone transactions" ("card not present"). Both payment options will be enabled automatically depends on terminal settings - you do not need to specify any parameters or make any additional settings.
