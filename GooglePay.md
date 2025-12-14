@@ -71,4 +71,4 @@ Environments
 NOTE
 -----------------------------------------------------------------
 
-Google Pay Payment method is allowed in Google Chrome Desktop only for Easy Card terminal where CVV and National ID are not required 
+Google Pay Payment method is allowed in Google Chrome Desktop only for Easy Card terminal where CVV and National ID are not required. 
